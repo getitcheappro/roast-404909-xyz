@@ -1,0 +1,214 @@
+name: Deploy Roast
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_date:
+        description: Optional archive date in YYYY-MM-DD format
+        required: false
+        type: string
+  push:
+    branches:
+      - main
+    paths:
+      - roast/index.html
+      - CNAME
+      - index.html
+      - robots.txt
+      - today/**
+      - history/**
+      - .github/workflows/deploy-roast.yml
+  schedule:
+    - cron: "0 10 * * *"
+      timezone: "Australia/Melbourne"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: roast-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Archive daily source report
+        env:
+          DEFAULT_TIMEZONE: Australia/Melbourne
+          INPUT_REPORT_DATE: ${{ github.event.inputs.report_date }}
+        run: |
+          set -euo pipefail
+
+          REPORT_DATE="${INPUT_REPORT_DATE:-}"
+          if [ -z "$REPORT_DATE" ]; then
+            REPORT_DATE="$(TZ="$DEFAULT_TIMEZONE" date +%F)"
+          fi
+          export REPORT_DATE
+
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const date = process.env.REPORT_DATE;
+          const sourcePath = path.join('roast', 'index.html');
+
+          if (!fs.existsSync(sourcePath)) {
+            console.log('No daily source report found at roast/index.html. Keeping the existing archive.');
+            process.exit(0);
+          }
+
+          const source = fs.readFileSync(sourcePath, 'utf8');
+
+          function decodeBase64Html(value) {
+            const trimmed = value.trim();
+            const dataUrl = trimmed.match(/^data:text\/html(?:;charset=[^;,]+)?;base64,([\s\S]+)$/i);
+            const candidate = (dataUrl ? dataUrl[1] : trimmed).replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+
+            if (candidate.length < 32 || candidate.length % 4 === 1 || !/^[A-Za-z0-9+/]+={0,2}$/.test(candidate)) {
+              return null;
+            }
+
+            const padded = candidate.padEnd(Math.ceil(candidate.length / 4) * 4, '=');
+            const decoded = Buffer.from(padded, 'base64').toString('utf8').replace(/^\uFEFF/, '');
+
+            return /<!doctype\s+html|<html[\s>]|<head[\s>]/i.test(decoded) ? decoded : null;
+          }
+
+          let html = source.replace(/^\uFEFF/, '');
+          const decodedHtml = decodeBase64Html(html);
+          if (decodedHtml) {
+            html = decodedHtml;
+            console.log('Decoded base64 HTML source from roast/index.html.');
+          }
+          const redirectShell = /http-equiv=["']refresh["'][^>]*url=\/today\//i.test(html) && /Open latest report/i.test(html);
+
+          if (!html.trim() || redirectShell) {
+            console.log('roast/index.html is the legacy redirect shell. Keeping the existing archive.');
+            process.exit(0);
+          }
+
+          if (!/<head[\s>]/i.test(html)) {
+            throw new Error('roast/index.html must contain a <head> element.');
+          }
+
+          const robots = '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">';
+          const googlebot = '<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">';
+
+          if (!/<meta\s+name=["']robots["'][^>]*noindex/i.test(html)) {
+            html = html.replace(/<head([^>]*)>/i, `<head$1>\n${robots}`);
+          }
+
+          if (!/<meta\s+name=["']googlebot["'][^>]*noindex/i.test(html)) {
+            html = html.replace(/<head([^>]*)>/i, `<head$1>\n${googlebot}`);
+          }
+
+          const title = (html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] || `Roast Report - ${date}`)
+            .replace(/\s+/g, ' ')
+            .trim();
+          const summary = (html.match(/<meta\s+name=["']description["'][^>]*content=["']([^"']*)/i)?.[1] || '')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+          const outputDir = path.join('reports', date);
+          const outputPath = path.join(outputDir, 'index.html');
+          fs.mkdirSync(outputDir, { recursive: true });
+          fs.writeFileSync(outputPath, html);
+
+          const manifestPath = 'reports.json';
+          let reports = [];
+          if (fs.existsSync(manifestPath)) {
+            reports = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            if (!Array.isArray(reports)) {
+              throw new Error('reports.json must contain an array.');
+            }
+          }
+
+          reports = reports.filter((report) => report.date !== date);
+          reports.push({
+            date,
+            title,
+            path: `/reports/${date}/`,
+            summary
+          });
+          reports.sort((a, b) => b.date.localeCompare(a.date));
+          fs.writeFileSync(manifestPath, `${JSON.stringify(reports, null, 2)}\n`);
+
+          console.log(`Archived ${sourcePath} to ${outputPath}.`);
+          NODE
+
+          if ! git diff --quiet -- reports reports.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add reports reports.json
+            git commit -m "roast archive: ${REPORT_DATE}"
+            git push origin HEAD:main
+          else
+            echo "Archive is already up to date."
+          fi
+
+      - name: Prepare static Pages site
+        run: |
+          set -euo pipefail
+
+          rm -rf _site
+          mkdir -p _site
+
+          cp CNAME _site/CNAME
+          cp index.html _site/index.html
+          cp robots.txt _site/robots.txt
+          cp reports.json _site/reports.json
+
+          for dir in today history reports; do
+            if [ -d "$dir" ]; then
+              mkdir -p "_site/$dir"
+              cp -R "$dir"/. "_site/$dir"/
+            fi
+          done
+
+          mkdir -p _site/roast
+          cp index.html _site/roast/index.html
+
+          test -f _site/today/index.html
+          test -f _site/history/index.html
+          test -f _site/reports.json
+          test -d _site/reports
+          touch _site/.nojekyll
+          find _site -maxdepth 4 -type f | sort
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify roast URL
+        run: |
+          curl --fail --head --retry 12 --retry-delay 10 --retry-all-errors --max-time 30 http://roast.404909.xyz/today/
+          curl --fail --head --retry 12 --retry-delay 10 --retry-all-errors --max-time 30 http://roast.404909.xyz/history/
+          curl --fail --head --retry 12 --retry-delay 10 --retry-all-errors --max-time 30 http://roast.404909.xyz/reports.json
+          if curl --fail --head --max-time 30 https://roast.404909.xyz/today/; then
+            echo "HTTPS verification passed."
+          else
+            echo "::warning::HTTPS verification did not pass yet. GitHub Pages may still be issuing the custom-domain certificate."
+          fi

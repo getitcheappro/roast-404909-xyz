@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<title>The Sasha Report — Vol. 005 — 10 июля 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --fg: #e8e0d8;
+  --accent: #ff3c00;
+  --accent2: #ff9900;
+  --dim: #6b6b6b;
+  --panel: #141414;
+  --border: #2a2a2a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Special Elite', 'Courier New', monospace;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+header {
+  text-align: center;
+  padding: 6rem 1rem 3rem;
+  border-bottom: 4px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+}
+header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,60,0,0.03) 0px, rgba(255,60,0,0.03) 1px, transparent 1px, transparent 4px);
+  pointer-events: none;
+}
+header h1 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(255,60,0,0.4), 0 0 80px rgba(255,60,0,0.2);
+}
+header .sub {
+  font-size: 0.95rem;
+  color: var(--dim);
+  margin-top: 1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+header .date {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  color: var(--accent2);
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+}
+.quote {
+  max-width: 700px;
+  margin: 2rem auto 0;
+  font-style: italic;
+  color: var(--dim);
+  font-size: 1.1rem;
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.metric {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.metric:hover { transform: translateY(-4px); border-color: var(--accent); }
+.metric .num {
+  font-family: 'Anton', sans-serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+  line-height: 1;
+}
+.metric .label {
+  font-size: 0.75rem;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.4rem;
+}
+.scale-bar {
+  height: 6px;
+  background: var(--border);
+  margin-top: 0.6rem;
+  position: relative;
+  overflow: hidden;
+}
+.scale-bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 1.5s ease;
+}
+.exhibit {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.exhibit.visible { opacity: 1; transform: translateY(0); }
+.exhibit-label {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+.exhibit h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+.exhibit p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+.exhibit .highlight {
+  color: var(--accent2);
+  font-weight: bold;
+}
+.exhibit .timestamp {
+  font-size: 0.8rem;
+  color: var(--dim);
+  border: 1px solid var(--border);
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  margin-bottom: 0.8rem;
+  font-family: 'Special Elite', monospace;
+}
+.exhibit .fact-box {
+  background: var(--panel);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+.exhibit .fact-box ul {
+  list-style: none;
+  padding: 0;
+}
+.exhibit .fact-box li {
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+.exhibit .fact-box li:last-child { border: none; }
+.verdict {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 1rem 6rem;
+  text-align: center;
+}
+.verdict h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.verdict p {
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--dim);
+}
+footer {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--dim);
+  font-size: 0.8rem;
+}
+.burn { color: var(--accent); font-weight: bold; }
+@media (max-width: 500px) {
+  .metrics { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>The Sasha Report</h1>
+  <div class="sub">Разоблачающий ежедневник одного предпринимателя &middot; с любовью и без пощады</div>
+  <div class="date">Vol. 005 &middot; 10 июля 2026 &middot; Мельбурн</div>
+  <div class="quote">"Сегодня я наконец займусь делом. Честно. Но сначала дашборд."</div>
+</header>
+
+<div class="metrics">
+  <div class="metric">
+    <div class="num">8</div>
+    <div class="label">Задач закрыто</div>
+    <div class="scale-bar"><div class="fill" style="width:16%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">50</div>
+    <div class="label">Событий в очереди</div>
+    <div class="scale-bar"><div class="fill" style="width:100%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">0</div>
+    <div class="label">Просрочено</div>
+    <div class="scale-bar"><div class="fill" style="width:0%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">1&thinsp;107</div>
+    <div class="label">Писем в Gmail</div>
+    <div class="scale-bar"><div class="fill" style="width:85%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">47</div>
+    <div class="label">Buyable, но Available 0</div>
+    <div class="scale-bar"><div class="fill" style="width:94%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">&infin;</div>
+    <div class="label">Дашбордов создано</div>
+    <div class="scale-bar"><div class="fill" style="width:100%"></div></div>
+  </div>
+</div>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit A &middot; Мета-уровень</div>
+  <h2>Сначала — доработай дашборд, который дорабатывает дашборд</h2>
+  <div class="timestamp">~13:46 AEST</div>
+  <p>В 13:46 Саша открыл <span class="highlight">Codex</span> и отдал приказ: <em>"Переключи макет 404 HQ. Преврати экран 'Сегодня' из статичного dashboard в персональную интеллектуальную сводку."</em> Codex работал <span class="highlight">9 минут 42 секунды</span>. Playwright скриншотил, шапки сдулись с 145px до 54px.</p>
+  <p>Цель: система должна показывать только то, что требует его решения. Философия: если событие не требует решения Саши — оно не должно занимать место на главном экране. <span class="burn">Отличный способ не видеть задачи, которые не хочешь делать.</span></p>
+  <p>Задач закрыто до 16:25: <span class="highlight">все ещё считаем</span>. Зато BUILD обновился.</p>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit B &middot; Утро</div>
+  <h2>1 107 писем и ни одного закрытого тикета</h2>
+  <div class="timestamp">~08:54 AEST</div>
+  <p>Саша проснулся и первым делом открыл Gmail. <span class="highlight">1 107 сообщений</span> на bestofrandomuk. Продажи, алерты, жалобы, профиты. Но не список дел — <em>список следствий</em>.</p>
+  <p>В 11:10 вылезло еще больше: GitHub токен истекает, Mercury карта готова, Vercel отклонил deployment от lodhisherdil1@gmail.com, Tailscale приглашает на конференцию. <span class="burn">Саша, ты смотришь на инфраструктуру своей жизни как Netflix: уведомления крутятся, а ты просто скроллишь.</span></p>
+  <div class="fact-box">
+    <ul>
+      <li>Закрыто сегодня (в 10:46): <strong>0</strong></li>
+      <li>В работе: <strong>17</strong></li>
+      <li>Выложено товаров: <strong>2</strong></li>
+      <li>Билд: <strong>14E191A8DDBF</strong> (собран 9 июля в 17:38)</li>
+    </ul>
+  </div>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit C &middot; Кроличьи норы</div>
+  <h2>Kinguin Complaint Dashboard, Кава и Ruby Gem для банка</h2>
+  <div class="timestamp">~12:23 — 22:18 AEST</div>
+  <p>В 12:23 Саша сидел в Kinguin Resolution Center, разблокируя offer ID 69d703c. В 13:35 вместо того, чтобы просто ответить на тикет, он попросил ChatGPT собрать <span class="highlight">Google Sites dashboard</span> для review жалоб — с фильтрами, дедлайнами и копируемыми шаблонами. <span class="burn">Теперь у него есть дашборд для дашборда жалоб. Рекурсия.</span></p>
+  <p>В 09:24 — <em>для разнообразия</em> — eBay по запросу <span class="highlight">"feeling swell"</span>: бутылкм, сыворотка для глаз, игрушки для собак. Саша ищет свое состояние по ключевым словам.</p>
+  <p>В 22:18 — апогей. GitHub: <span class="highlight">moraki-finance/revolut-connect</span>. Ruby gem для Revolut Business API. <em>"А давайте автоматизируем финансы!"</em> — сказал человек, у которого 50 невыполненных задач в очереди и товар без кодов на Keysender.</p>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit D &middot; Университет</div>
+  <h2>Canvas LMS: настройка уведомлений вместо учебы</h2>
+  <div class="timestamp">~15:02 AEST</div>
+  <p>В 15:02 Саша открыл <span class="highlight">Canvas LMS</span> — не для того, чтобы сдать INFO90002 или ISYS90026. Нет. Он настраивал <em>email и push-уведомления</em>. Какие алерты приходят по assignment, какие по discussions, grades, announcements.</p>
+  <p><span class="burn">Когда не знаешь, что делать с курсом — настрой, чтобы курс тебе напоминал, что ты его не делаешь.</span> Weekly alerts: Saturday 19:00–21:00. Саша и так знает.</p>
+  <div class="fact-box">
+    <ul>
+      <li>INFO90002 — Database Systems</li>
+      <li>ISYS90026 — Concepts in Information Systems</li>
+      <li>COMP90059 — Introduction to Programming</li>
+      <li>ISYS90051 — Digital Impacts on Business</li>
+      <li>Preventing Sexual Misconduct Module: <strong>100%</strong></li>
+      <li>Остальные предметы: <strong>ждем</strong></li>
+    </ul>
+  </div>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit E &middot; Бизнес-пульс</div>
+  <h2>Команда крутится, Саша смотрит KPI</h2>
+  <div class="timestamp">~16:13 — 17:35 AEST</div>
+  <p>В 16:13 KPI dashboard: выручка <span class="highlight">€1 775</span>, зарплата, дисциплина, рекламный бюджет. Aida закрыла 7 из 57 задач, загрузила 2 товара, 17 в работе. Upload completion: <span class="highlight">46,4%</span> (135 из 291). 1 красный блок. Andrey: 1 из 5 KPI pending review.</p>
+  <p>В 17:34 расчет зарплат: <span class="highlight">€6 500</span> предварительно. Anton, Mama, Andrey, Aida — все ждут, пока курсы EUR/RUB не станут известны. А Саша ждет, пока кто-то загрузит 28 ссылок на G2A.</p>
+  <div class="fact-box">
+    <ul>
+      <li>Kinguin баланс: <strong>36 036,74 EUR</strong> (+506,93 за день)</li>
+      <li>G2A баланс: <strong>39 674,73 EUR</strong></li>
+      <li>Gamivo: <strong>4 340,23 EUR</strong></li>
+      <li>BOG: <strong>174 726,13 EUR / 199 660,51 USD</strong></li>
+      <li>Keysender credits: <strong>3 220,5</strong>, balance: <strong>0,00 EUR</strong></li>
+      <li>Office 2019 Pro Plus OEM: buyable <strong>47</strong>, available <strong>0</strong></li>
+      <li>G2A новый разговор: <strong>M-CQLI-946206</strong> (дедлайн 11 июля)</li>
+      <li>Starter Project: кейсы с дедлайнами <strong>11–12 июля</strong></li>
+    </ul>
+  </div>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit F &middot; Вечер и ночь</div>
+  <h2>Slack, Telegram QR и финансовые чарты</h2>
+  <div class="timestamp">~21:47 — 23:50 AEST</div>
+  <p>В 21:47 ChatGPT ждал Telegram Web QR-код. <em>"4 мин → 3 мин → 2 мин → 1 мин → иду давать пиздов."</em> Саша, который не может ждать 60 секунд, ждал обновления DNS и webhook. <span class="burn">Инфраструктура ждет, пока Саша ждет, пока Саша ждет Telegram.</span></p>
+  <p>В 22:58 в Ledger: 50 событий, 14 в работе, 0 просрочено. Закрыто: наконец-то <span class="highlight">8</span>. Но 13 высокоприоритетных задач все еще ждут. Среди них: пополнить Kinguin (available 0), проверить revoked G2A, загрузить Server 2025 Datacenter qty 50.</p>
+  <p>В 23:30 Slack — задачи для команды: Aida должна проверить MS Office ключи, добавить 28 ссылок G2A. Zeta127 должен исследовать продавца на Plati.market. <span class="burn">Саша раздает задачи в 23:30. Сам закрыл 8. Математика командной работы.</span></p>
+</article>
+
+<article class="verdict">
+  <h2>Вердикт</h2>
+  <p>День, когда 0 задач превратилось в 8. День, когда вместо ответа на Kinguin-тикет был создан Kinguin Complaint Dashboard. День, когда Canvas настраивал push-уведомления, а не проходил модули. День, когда баланс Kinguin вырос на 500 EUR, а available Office — остался на нуле.</p>
+  <p><span class="burn">Саша, ты не управляешь бизнесом. Ты управляешь интерфейсом для управления бизнесом.</span> И интерфейс выглядит охренительно. BUILD обновлен. Дашборды блестят. Задачи в очереди — как новые.</p>
+  <p style="margin-top:1.5rem; font-size:1rem;">Завтра — 11 июля. Дедлайны Starter Project. Дедлайн G2A M-CQLI-946206. Дедлайн проверки KPI Aida. <span class="highlight">Саша, выходи из local development.</span></p>
+</article>
+
+<footer>
+  THE SASHA REPORT &middot; VOL. 005 &middot; 10 ИЮЛЯ 2026 &middot; ГЕНЕРИРОВАНО ИЗ ДАННЫХ, А НЕ ВЫДУМКИ
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.exhibit').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

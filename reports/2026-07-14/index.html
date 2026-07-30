@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<title>The Sasha Report - Vol. 007 - 13 July 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --fg: #e8e0d8;
+  --accent: #ff3c00;
+  --accent2: #ff9900;
+  --dim: #6b6b6b;
+  --panel: #141414;
+  --border: #2a2a2a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Special Elite', 'Courier New', monospace;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+header {
+  text-align: center;
+  padding: 6rem 1rem 3rem;
+  border-bottom: 4px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+}
+header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,60,0,0.03) 0px, rgba(255,60,0,0.03) 1px, transparent 1px, transparent 4px);
+  pointer-events: none;
+}
+header h1 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(255,60,0,0.4), 0 0 80px rgba(255,60,0,0.2);
+}
+header .sub {
+  font-size: 0.95rem;
+  color: var(--dim);
+  margin-top: 1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+header .date {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  color: var(--accent2);
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+}
+.quote {
+  max-width: 700px;
+  margin: 2rem auto 0;
+  font-style: italic;
+  color: var(--dim);
+  font-size: 1.1rem;
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.metric {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.metric:hover { transform: translateY(-4px); border-color: var(--accent); }
+.metric .num {
+  font-family: 'Anton', sans-serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+  line-height: 1;
+}
+.metric .label {
+  font-size: 0.75rem;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.4rem;
+}
+.scale-bar {
+  height: 6px;
+  background: var(--border);
+  margin-top: 0.6rem;
+  position: relative;
+  overflow: hidden;
+}
+.scale-bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 1.5s ease;
+}
+.exhibit {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.exhibit.visible { opacity: 1; transform: translateY(0); }
+.exhibit-label {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+.exhibit h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+.exhibit p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+.exhibit .highlight {
+  color: var(--accent2);
+  font-weight: bold;
+}
+.exhibit .timestamp {
+  font-size: 0.8rem;
+  color: var(--dim);
+  border: 1px solid var(--border);
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  margin-bottom: 0.8rem;
+  font-family: 'Special Elite', monospace;
+}
+.exhibit .fact-box {
+  background: var(--panel);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+.exhibit .fact-box ul {
+  list-style: none;
+  padding: 0;
+}
+.exhibit .fact-box li {
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+.exhibit .fact-box li:last-child { border: none; }
+.verdict {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 1rem 6rem;
+  text-align: center;
+}
+.verdict h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.verdict p {
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--dim);
+}
+footer {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--dim);
+  font-size: 0.8rem;
+}
+.burn { color: var(--accent); font-weight: bold; }
+@media (max-width: 500px) {
+  .metrics { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>The Sasha Report</h1>
+  <div class="sub">Злое таблоидное расследование о том, как Саша провел понедельник: гейминг лимитов Claude, аутсорсинг своей учебы и семейная терапия через CRICOS</div>
+  <div class="date">Vol. 007 - 13 July 2026 - Понедельник</div>
+  <div class="quote">"Постоянные сообщения и переключения мешают вернуться к задаче." - Sasha, про себя, в собственном опроснике</div>
+</header>
+
+<div class="metrics">
+  <div class="metric">
+    <div class="num">42</div>
+    <div class="label">задач требуют<br>внимания</div>
+    <div class="scale-bar"><div class="fill" style="width:100%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">37</div>
+    <div class="label">закрыто<br>сегодня</div>
+    <div class="scale-bar"><div class="fill" style="width:88%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">17</div>
+    <div class="label">все еще<br>в работе</div>
+    <div class="scale-bar"><div class="fill" style="width:40%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">1633</div>
+    <div class="label">минут тишины<br>reconciler</div>
+    <div class="scale-bar"><div class="fill" style="width:98%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">-502</div>
+    <div class="label">EUR июль<br>на старте</div>
+    <div class="scale-bar"><div class="fill" style="width:10%"></div></div>
+  </div>
+  <div class="metric">
+    <div class="num">0</div>
+    <div class="label">подписчиков<br>Дзен ТЕСТОВЫЙ</div>
+    <div class="scale-bar"><div class="fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit A - ledger.404909.xyz</div>
+  <h2>42 события, 2 просроченных, и мониторы, которые молчат дольше, чем ты на созвонах</h2>
+  <div class="timestamp">~11:10 - 22:13 AEST</div>
+  <p>Ты начал день с просмотра задач Аиды. 41 задача, 36 требуют действий. Потом переключился на свой Ledger. 42 открытых события, 11 критичных, 2 просроченных. Твоя личная задача с высоким приоритетом: <span class="highlight">"изучить вопрос найма саппорт"</span> - висит с 12 июля, и ты изучаешь ее, глядя на чужие задачи.</p>
+  <p>В 19:53 система тебе напомнила: монитор <span class="highlight">reconciler</span> молчит 1633 минуты. Монитор <span class="highlight">keysender_stock</span> - 1311 минут. Они должны отчитываться каждые 15 и 360 минут соответственно. Они молчат. Ты смотришь на цифры. Ничего не делаешь. <span class="burn">Наблюдатель за мониторами, которые не наблюдают.</span></p>
+  <p>В 22:01 Ledger переключился в <span class="highlight">NEON MODE</span>. 37 задач закрыто сегодня, 17 в работе, 12 тикетов support открыты. Ты смотрел на это в 22:01. Потом снова в 22:13. На старой версии Ledger для Аиды, где 3 просроченные задачи и DRY-RUN сообщения. <span class="burn">Ты провел вечер в своем же дашборде, как турист в собственном доме.</span></p>
+  <div class="fact-box">
+    <ul>
+      <li>Закрыто за неделю: <strong>95</strong></li>
+      <li>Закрыто сегодня: <strong>37</strong></li>
+      <li>В работе: <strong>17</strong></li>
+      <li>Support открыт: <strong>12</strong></li>
+      <li>Молчание reconciler: <strong>1633 мин</strong></li>
+      <li>Молчание keysender_stock: <strong>1311 мин</strong></li>
+    </ul>
+  </div>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit B - Claude AI</div>
+  <h2>Лимит использования, Reddit и galaxy-brain трюк с "Hello" на Haiku</h2>
+  <div class="timestamp">~15:41 - 15:29 AEST</div>
+  <p>В 15:41 Claude тебе сообщил: <span class="highlight">weekly usage limit approaching</span>. Сброс в четверг, 16 июля, 10:00 AEST. Что делает Саша? Отправляется в Google и ищет <span class="highlight">"claude usage reset"</span>.</p>
+  <p>На Reddit находит пост: <span class="highlight">"Pro Tip - Reset your usage limits on your schedule"</span>. Суть: создай Routine, запускай Haiku с "Hello", чтобы сдвинуть 5-часовое окно. Galaxy-brain workaround. Ты читал комментарии, разбирался в rolling window, смотрел на AI Overview. <span class="burn">Ты потратил лимит Claude на изучение того, как обмануть лимит Claude.</span></p>
+  <div class="fact-box">
+    <ul>
+      <li>Сброс лимита: <strong>четверг, 16 июля</strong></li>
+      <li>Трюк: <strong>Haiku "Hello" в 7:30</strong></li>
+      <li>Результат: <strong>потрачено еще больше токенов</strong></li>
+      <li>Уровень galax-brain: <strong>100%</strong></li>
+    </ul>
+  </div>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit C - helpyourself.404909.xyz</div>
+  <h2>24 вопроса, "формируется ствол", и совет "спокойно изучить альтернативы" - сам себе психолог</h2>
+  <div class="timestamp">~15:53 - 17:41 AEST</div>
+  <p>Ты провел полдня на <span class="highlight">helpyourself.404909.xyz</span> - сайте, который сам построил для Аиды. Смотрел раздел "Текущая работа", проходил вопросы. На вопрос "Что мешает начать или вернуться к задаче?" выбрал: <span class="highlight">"Постоянные сообщения и переключения"</span> и <span class="highlight">"Неясно, что будет считаться готовым"</span>.</p>
+  <p>Сайт тебе выдал рабочую гипотезу: <span class="highlight">"Спокойно изучить альтернативы"</span>. И еще: <span class="highlight">"Пока рано выбирать рабочий вариант"</span>. Ты смотрел CRICOS-каталог, 30 университетов, 300 программ. Проверял TEQSA. Потом переключился на "О методе", чтобы понять, почему сайт, который ты сам написал, выдает такие ответы. <span class="burn">Сам себе написал терапевтический сайт, сам себе в нем не веришь, и сам себе проверяешь, почему он не работает.</span></p>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit D - ChatGPT & Таск-спираль</div>
+  <h2>"поче... почему все сломалось?" - 20 новых задач вместо одной старой</h2>
+  <div class="timestamp">~17:57 - 18:17 AEST</div>
+  <p>В 17:57 ты сидел в ChatGPT и просил: <span class="highlight">"поче"</span>. Потом: <span class="highlight">"почему все с"</span>. Потом: <span class="highlight">"почему все сломалось?"</span>. За 20 минут ты создал список задач, который мог бы занять команду из пяти человек на месяц:</p>
+  <p>"Оптимизировать Slack workspace", "Починить procurement вебхуки", "Fix Slack logs", "Улучшить grill-me", "Провести аудит Ledger", "Добавить тему в стиле 3300", "Revise HQ site design", "Унифицировать UI Local HQ", "Найти progress-art-prompts", "Улучшить раздел помощника", "Проанализировать раздел поставщиков", "Проанализировать payroll с USDT", "Добавь bugs-виджет", "Найти сломавший коммит", "Собрать ролевую карточку Степана", "Посчитай суммы за июнь", "Создать лендинг Keynado", "Проверь новый отчет Антона".</p>
+  <p>А потом, в 18:17, ты открыл отчет Антона и нашел в нем ошибки: <span class="highlight">"7 advertising results, but table lists 6"</span>, старый шаблон, неверный период. <span class="burn">Сам не можешь закрыть 9-дневнюю задачу по Adobe Lightroom, но Антона за 6 офферов в отчете ловишь на неточности.</span></p>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit E - K4G & Microsoft Teams</div>
+  <h2>500+ EUR неотправленных ключей, Antoni говорит "justified", и 50% комиссия на random</h2>
+  <div class="timestamp">~в течение дня, последнее обновление 23:35 AEST</div>
+  <p>Ты спорил с K4G. Снова. Вспоминал письмо от Mickey от февраля: система авто-отклонения сломана, феи накапливались. Ты просил exception credit review. В июле Antoni тебе ответил: <span class="highlight">"only the ones refunded were issued no correctly, the rest seems justified"</span>. Ты не согласился. Повторил, что массовые списания были с сентября 2025 по январь 2026. Antoni спросил: "Are you saying these charges were not assigned correctly?" Ты молчал. Или отвечал. Или отвечал в другом чате.</p>
+  <p>Параллельно K4G открыли random keys для мерчантов с комиссией <span class="highlight">50%</span>. Aim To Get - 90% оборота. Твоя задача в Ledger: <span class="highlight">"исправить 25х амазинг рандом"</span> - критичный приоритет. <span class="burn">Ты продаешь случайные ключи, K4G забирает половину, а за неотправленные ключи списывают с тебя полностью. Бизнес-модель века.</span></p>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit F - Дашборды, деньги и 502</div>
+  <h2>97k EUR закупок, -502 EUR в июле, и Cloudflare, который не верит в твой payroll</h2>
+  <div class="timestamp">~16:04 - 18:07 AEST</div>
+  <p>В 16:04 ты смотрел закупки на Ledger: <span class="highlight">97,225.81 EUR</span> всего. 3 из 79 строк без подтвержденных EUR. Excel 2024 и Outlook 2024 помечены <span class="highlight">"высокая цена"</span>. Ты их купил, но знаешь, что они дорогие. В 17:50 считал зарплаты: Аида - до 3,000 EUR, Андрей - до 3,500 EUR, Антон - 435 EUR минимум. Платил в рублях по курсу ЦБ.</p>
+  <p>В 18:07 попытался открыть payroll на Ledger. <span class="highlight">502: Bad gateway</span> от Cloudflare. Твой собственный сервис не отвечает, когда ты пытаешься посмотреть, сколько должен команде. <span class="burn">Инфраструктура не выдерживает собственной зарплатной ведомости.</span></p>
+  <div class="fact-box">
+    <ul>
+      <li>Закупки: <strong>97,225.81 EUR</strong></li>
+      <li>Строк без EUR: <strong>3 из 79</strong></li>
+      <li>Excel 2024: <strong>высокая цена</strong></li>
+      <li>Outlook 2024: <strong>высокая цена</strong></li>
+      <li>Июль: <strong>-502.54 EUR</strong></li>
+      <li>Cloudflare: <strong>502</strong></li>
+    </ul>
+  </div>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit G - ТЕСТОВЫЙ и баг-репорты</div>
+  <h2>Канал с 0 подписчиков, баг-репорт "ТЕСТ", и вечерний Дзен без дзена</h2>
+  <div class="timestamp">~16:24 - 17:35 AEST</div>
+  <p>В 16:24 ты отправил баг-репорт в Ledger. Комментарий: <span class="highlight">"ТЕСТ"</span>. Номер репорта: 155c1ea0-3252-4fbd-97d3-2cc4537b2583. Ты тестируешь свою собственную систему баг-репортов, отправляя тестовый баг в продакшн. <span class="burn">QA-инженер года.</span></p>
+  <p>В 17:35 смотрел <span class="highlight">Дзен Студио</span>. Канал "ТЕСТОВЫЙ". <span class="highlight">0 подписчиков</span>. Все публикации - 0 просмотров, 0 CTR, 0 лайков. Статьи про Windows 95, Microsoft, Copilot OS. Ты смотрел на VK-рекламу для канала, который никто не смотрит. <span class="burn">Продвижение нуля - это тоже математика. 0 * VK Ads = 0.</span></p>
+</article>
+
+<article class="exhibit">
+  <div class="exhibit-label">Exhibit H - UniMelb</div>
+  <h2>INFO90002 / ISYS90026 - 0 минут, 0 задач, 0 прогресса. Семестр сам себя не сдаст</h2>
+  <div class="timestamp">~весь день</div>
+  <p>За весь день 13 июля не обнаружено ни одного снимка экрана, связанного с учебой в UniMelb. Ни LMS, ни лекций, ни семинаров, ни кодов, ни SQL. Ты записан на INFO90002 и ISYS90026, но вместо этого считал зарплату в рублях, смотрел CRICOS-каталог для Аиды и геймил лимиты Claude. <span class="burn">Ты открываешь Australian university programs для жены, но не открываешь собственный университетский портал.</span></p>
+</article>
+
+<article class="verdict">
+  <h2>Вердикт</h2>
+  <p>Ты провел понедельник, смотря на 42 задачи, которые требуют внимания, и закрыв 37 из них - но не ту, которая висит с 4 июля (Adobe Lightroom). Ты потратил лимит Claude на поиск способа обойти лимит Claude. Ты прошел собственный опросник и узнал, что переключения мешают работе - между просмотром К4G, Ledger, Дзена и ChatGPT.</p>
+  <p>Твои мониторы молчат по 27 часов, а ты молчишь в ответ. Ты споришь с K4G о 500 EUR, пока K4G вводит 50% комиссию на random. Твой сервер отдает 502 на payroll, а июль начался с -502 EUR. Ты тестируешь баг-репорты в продакшне, а продакшн - это твоя жизнь.</p>
+  <p style="margin-top:1.5rem; font-size:1rem;">Зато CRICOS сверен, TEQSA проверена, и у Антона в отчете 6 офферов вместо 7 - ты это заметил. <span class="highlight">Следующий честный шаг: закрыть Adobe Lightroom. Или хотя бы открыть Moodle.</span></p>
+</article>
+
+<footer>
+  THE SASHA REPORT - VOL. 007 - 13 JULY 2026 - 37 ЗАДАЧ ЗАКРЫТО, 1633 МИНУТ МОЛЧАНИЯ, 0 ПОДПИСЧИКОВ, 1 ТЕСТ-БАГ
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.exhibit').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <title>Duplicate Text Lab</title>
+    <meta name="description" content="Импорт CSV и TXT, поиск дублей, сортировка и обработка строк прямо в браузере.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Duplicate Text Lab">
+    <meta property="og:description" content="CSV в строки, дубли, сортировка и обработка списков в одном локальном инструменте.">
+    <meta property="og:url" content="https://duplicate.404909.xyz/">
+    <meta property="og:image" content="https://duplicate.404909.xyz/logo-preview.svg?v=20260710i">
+    <meta property="og:image:type" content="image/svg+xml">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Duplicate Text Lab">
+    <meta name="twitter:description" content="CSV в строки, дубли, сортировка и обработка списков в одном локальном инструменте.">
+    <meta name="twitter:image" content="https://duplicate.404909.xyz/logo-preview.svg?v=20260710i">
+    <link rel="icon" href="favicon.svg?v=20260710i" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css?v=20260710i">
+    <script>
+      const isDuplicateLab =
+        window.location.hostname === "duplicate.404909.xyz" ||
+        window.location.port === "4178" ||
+        new URLSearchParams(window.location.search).has("duplicate");
+
+      if (isDuplicateLab) {
+        document.documentElement.classList.add("duplicate-lab");
+      } else {
+        window.location.replace("/today/");
+      }
+    </script>
+    <style>html:not(.duplicate-lab) body { visibility: hidden; }</style>
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="head">
+        <div class="head-brand">
+          <img class="brand-mark" src="favicon.svg?v=20260710i" alt="" width="48" height="48" aria-hidden="true">
+          <div class="head-text">
+            <h1>Duplicate Text Lab</h1>
+            <p>CSV в строки, дубли, сортировка и обработка списков. Всё остаётся в браузере.</p>
+          </div>
+        </div>
+        <div class="stats" aria-label="Статистика строк">
+          <div class="stat">
+            <span class="stat-value" id="statTotal">0</span>
+            <span class="stat-label">строк</span>
+          </div>
+          <div class="stat stat-unique">
+            <span class="stat-value" id="statUnique">0</span>
+            <span class="stat-label">уникальных</span>
+          </div>
+          <div class="stat stat-dupes">
+            <span class="stat-value" id="statDupes">0</span>
+            <span class="stat-label">дублей</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="file-import" aria-labelledby="fileImportTitle">
+        <div class="file-import-copy">
+          <span class="file-import-kicker">Импорт файла</span>
+          <h2 id="fileImportTitle">CSV или TXT → одна запись на строке</h2>
+          <p>Многострочные ячейки распрямятся автоматически. Колонка <code>Info</code> выбирается первой, если она есть.</p>
+        </div>
+        <div class="file-import-actions">
+          <label class="file-button primary-action" for="fileInput">Выбрать CSV / TXT</label>
+          <input id="fileInput" class="visually-hidden" type="file" accept=".csv,.txt,text/csv,text/plain">
+          <span id="fileStatus" class="file-status" role="status" aria-live="polite">Файл не выбран</span>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <div class="toolbar-main">
+          <div class="tool-group">
+            <button type="button" class="op" data-op="dedupe">Удалить дубли</button>
+            <button type="button" class="op" data-op="sortAlpha">Сортировать А-Я</button>
+            <button type="button" class="op" data-op="sortLength">По длине</button>
+            <button type="button" class="op" data-op="sortCount">По количеству</button>
+            <button type="button" class="op" data-op="removeEmpty">Убрать пустые</button>
+          </div>
+          <div class="tool-group actions">
+            <button id="clearBtn" type="button" class="op op-action" title="Очистить исходный текст и результат">Очистить всё</button>
+            <button id="copyBtn" type="button" class="op op-action primary-action" title="Скопировать результат в буфер обмена">Скопировать</button>
+          </div>
+        </div>
+        <div class="toolbar-generator">
+          <div class="tool-group gen">
+            <span class="gen-title">Суффикс</span>
+            <input id="genSeparator" type="text" value="#" aria-label="Разделитель" title="Разделитель (например, #)" class="gen-sep" placeholder="разделитель">
+            <input id="genLength" type="number" value="3" min="1" max="64" aria-label="Число символов" title="Длина суффикса (символов)" class="gen-len" placeholder="длина">
+            <input id="genRows" type="number" min="1" max="10000" aria-label="Сколько строк создать, если исходник пустой" title="Генерировать строк (если исходник пустой)" class="gen-rows" placeholder="строк">
+            <select id="genFormat" aria-label="Формат" title="Формат генерируемых символов">
+              <option value="digits">Цифры</option>
+              <option value="letters">Буквы</option>
+              <option value="mixed">Цифры+буквы</option>
+            </select>
+            <button id="generateBtn" type="button" class="primary">Добавить</button>
+            <span class="gen-hint">AA → AA#256</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section class="col">
+          <div class="col-head">
+            <label for="inputText">Исходник</label>
+          </div>
+          <textarea id="inputText" wrap="off" spellcheck="false" placeholder="Вставьте строки или загрузите CSV…&#10;AA&#10;BB&#10;AA"></textarea>
+        </section>
+
+        <section class="col">
+          <div class="col-head">
+            <label for="resultText">Результат</label>
+          </div>
+          <textarea id="resultText" wrap="off" spellcheck="false" readonly placeholder="Здесь появится результат"></textarea>
+        </section>
+      </div>
+
+      <section class="dupes">
+        <div class="dupes-head">
+          <h2>Повторяющиеся строки</h2>
+        </div>
+        <div id="dupesList" class="dupes-list empty">Дублей нет</div>
+      </section>
+
+      <footer class="foot">
+        <a href="https://ledger.404909.xyz/" class="foot-link">
+          <span class="foot-icon">←</span> Вернуться в Ledger HQ
+        </a>
+      </footer>
+    </main>
+
+    <script src="app.js?v=20260710i"></script>
+  </body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Sasha Report — Vol. 003 — 8 июля 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=Oswald:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #e63312;
+    --orange: #f57c00;
+    --yellow: #ffd600;
+    --dark: #0a0a0a;
+    --dark2: #111111;
+    --dark3: #1a1a1a;
+    --dark4: #242424;
+    --text: #e8e0d0;
+    --muted: #888880;
+    --border: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Special Elite', serif;
+    overflow-x: hidden;
+  }
+
+  .masthead {
+    background: var(--dark2);
+    border-bottom: 3px solid var(--red);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, rgba(230,51,18,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .vol-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: .72rem;
+    letter-spacing: .35em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .masthead h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: .92;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 0 60px rgba(230,51,18,.5);
+  }
+  .masthead h1 span { color: var(--red); }
+  .issue-line {
+    margin-top: 16px;
+    font-family: 'Oswald', sans-serif;
+    font-size: .85rem;
+    letter-spacing: .2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .subtitle {
+    margin-top: 14px;
+    font-size: 1.05rem;
+    color: var(--orange);
+    font-style: italic;
+  }
+  .fire-strip {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: var(--red);
+    color: #fff;
+    font-family: 'Anton', sans-serif;
+    font-size: .75rem;
+    letter-spacing: .15em;
+    padding: 5px 14px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .badge.yellow { background: var(--yellow); color: #000; }
+  .badge.orange { background: var(--orange); }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .section {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .exhibit-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .68rem;
+    letter-spacing: .45em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .exhibit-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .exhibit-title em {
+    color: var(--orange);
+    font-style: normal;
+  }
+
+  .body-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .body-text strong { color: var(--orange); font-style: normal; }
+  .body-text .highlight { color: var(--yellow); font-weight: bold; }
+  .body-text .dead { color: var(--red); font-weight: bold; }
+
+  .pull-quote {
+    border-left: 4px solid var(--red);
+    padding: 14px 22px;
+    margin: 24px 0;
+    background: var(--dark3);
+    font-size: 1.15rem;
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .metric-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--red);
+    padding: 16px 18px;
+    border-radius: 2px;
+  }
+  .metric-card.orange { border-top-color: var(--orange); }
+  .metric-card.yellow { border-top-color: var(--yellow); }
+  .metric-card.green { border-top-color: #4caf50; }
+  .metric-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: #fff;
+  }
+  .metric-value.red { color: var(--red); }
+  .metric-value.orange { color: var(--orange); }
+  .metric-value.yellow { color: var(--yellow); }
+  .metric-value.green { color: #4caf50; }
+  .metric-sub {
+    font-size: .78rem;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .bar-row { margin: 12px 0; }
+  .bar-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  .bar-label span { color: var(--text); }
+  .bar-track {
+    height: 8px;
+    background: var(--dark4);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(.25,.46,.45,.94);
+  }
+  .bar-fill.orange { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+  .bar-fill.green { background: linear-gradient(90deg, #2e7d32, #4caf50); }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin: 20px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 18px;
+    font-size: .9rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 6px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--dark);
+  }
+  .tl-time {
+    font-family: 'Oswald', sans-serif;
+    font-size: .7rem;
+    color: var(--orange);
+    letter-spacing: .1em;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .log-block {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: .88rem;
+    color: var(--muted);
+  }
+  .log-block .cmd { color: var(--orange); }
+  .log-block .ok { color: #4caf50; }
+  .log-block .err { color: var(--red); }
+  .log-block .comment { color: #555; }
+
+  .verdict-box {
+    background: linear-gradient(135deg, var(--dark2) 0%, #1c0a00 100%);
+    border: 2px solid var(--red);
+    padding: 40px 36px;
+    text-align: center;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  .verdict-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(230,51,18,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .verdict-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    color: var(--red);
+    text-transform: uppercase;
+    text-shadow: 0 0 40px rgba(230,51,18,.6);
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .verdict-body {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto 18px;
+  }
+  .verdict-body strong { color: var(--orange); }
+  .verdict-score {
+    font-family: 'Anton', sans-serif;
+    font-size: 5rem;
+    color: var(--yellow);
+    line-height: 1;
+    margin: 10px 0;
+    text-shadow: 0 0 30px rgba(255,214,0,.4);
+  }
+  .verdict-score-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: .72rem;
+    letter-spacing: .2em;
+    color: #333;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0;
+    color: var(--border);
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .divider span {
+    font-family: 'Anton', sans-serif;
+    font-size: .7rem;
+    letter-spacing: .3em;
+    color: var(--red);
+  }
+
+  .roast-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: .9rem;
+    margin: 20px 0;
+  }
+  .roast-table th {
+    font-family: 'Oswald', sans-serif;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    border-bottom: 2px solid var(--red);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  .roast-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .roast-table tr:hover td { background: var(--dark3); }
+
+  @media (max-width: 600px) {
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .verdict-box { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <span class="vol-tag">The Sasha Report · Vol. 003 · Edition: 8 июля 2026 г. · Мельбурн</span>
+  <h1>THE <span>SASHA</span><br>REPORT</h1>
+  <div class="issue-line">Разоблачающий ежедневник одного предпринимателя · с любовью и без пощады</div>
+  <p class="subtitle">"Сегодня я наконец займусь главным. Честно."</p>
+  <div class="fire-strip">
+    <span class="badge">🔥 51 инцидент</span>
+    <span class="badge orange">€0 в графиках</span>
+    <span class="badge yellow">0 задач закрыто</span>
+    <span class="badge">Кнопка всё ещё сломана</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section" id="exhibit-a">
+    <div class="exhibit-label">Exhibit A · Производительность</div>
+    <h2 class="exhibit-title">Смотреть на <em>Ноль</em><br>— Тоже Работа</h2>
+    <p class="body-text">
+      Саша открыл <strong>ledger.404909.xyz</strong> в 10:50 утра. Следующие 13 часов он преданно
+      его не закрывал. За это время он посетил раздел Помощник, KPI, Поставщики, Закупки,
+      Зарплаты, Продажи, События и Настройки. Примерно в порядке паники.
+    </p>
+    <p class="body-text">
+      Кульминация наступила около 19:09, когда финансовая сводка показала абсолютно
+      художественный результат: <span class="dead">€0 продаж, €0 профита, 0% маржи</span> по всем
+      пяти площадкам одновременно. G2A — €0. Kinguin — €0. K4G — €0. Difmark — €0. Eneba — €0.
+      Ledger вежливо сообщил: <em>"Данные из Google Sheets сейчас недоступны. Показан запасной снимок."</em>
+    </p>
+    <div class="pull-quote">
+      Запасной снимок бизнеса на €38к/месяц выглядит как финансовый дашборд банкрота. Но зато красиво.
+    </div>
+    <p class="body-text">
+      Важно понимать: этот человек строит внутренний инструмент для отслеживания бизнеса.
+      Весь день. Вместо того чтобы вести бизнес. Май 2026 был закрыт с чистыми
+      <strong>€38,420</strong> — и это видно только потому, что Саша переключился на закрытый месяц
+      вручную. Июль 2026 смотрел на него нулями и молчал.
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Открытий Ledger за день</div>
+        <div class="metric-value red">9+</div>
+        <div class="metric-sub">Помощник, KPI, Продажи, Закупки, Зарплаты, События, Настройки, Поставщики, Дашборд</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Июль 2026 в дашборде</div>
+        <div class="metric-value orange">€0</div>
+        <div class="metric-sub">Google Sheets недоступны. Запасной снимок. Всё спокойно.</div>
+      </div>
+      <div class="metric-card yellow">
+        <div class="metric-label">Май 2026 (реальность)</div>
+        <div class="metric-value yellow">€38к</div>
+        <div class="metric-sub">Чистый результат. Да, это реальный бизнес.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Готово задач за день</div>
+        <div class="metric-value red">0</div>
+        <div class="metric-sub">По данным Ledger в 23:41. "Пока пусто."</div>
+      </div>
+    </div>
+    <div class="divider"><span>◆</span></div>
+    <div class="bar-row">
+      <div class="bar-label">Критические инциденты в 10:50 утра <span>50 шт.</span></div>
+      <div class="bar-track"><div class="bar-fill" data-w="98"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Критические инциденты в 17:25 <span>51 шт.</span></div>
+      <div class="bar-track"><div class="bar-fill" data-w="100"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Критические инциденты решено <span>0 шт.</span></div>
+      <div class="bar-track"><div class="bar-fill" data-w="1" style="background: #333;"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Рынки в риске (Difmark) <span>1 / 5</span></div>
+      <div class="bar-track"><div class="bar-fill orange" data-w="20"></div></div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-b">
+    <div class="exhibit-label">Exhibit B · Разработка</div>
+    <h2 class="exhibit-title">Кнопка <em>«Обновить Данные»</em><br>Против Системы</h2>
+    <p class="body-text">
+      В 16:54 Codex начал аудит раздела Поставщики. В 16:57 — улучшение Помощника.
+      В 19:59 — масштабную охоту на "сломавший коммит" через visual audit скрипты,
+      Playwright, Docker и ручную правку <strong>TopBar.tsx</strong>.
+      Codex работал <strong>33 минуты 59 секунд</strong> на одном запросе. Потом ещё 22 минуты.
+    </p>
+    <p class="body-text">
+      В 19:59 Саша послал в Codex сообщение: <em class="highlight">"так кнопка обновить данные так и осталась"</em>.
+      Codex честно зафиксировал это, запустил ещё несколько Playwright-тестов,
+      закоммитил "Fix compact ledger top bar sizing" — и кнопка осталась сломанной.
+    </p>
+    <div class="log-block">
+      <span class="comment"># Хроника борьбы с кнопкой «Обновить данные»</span><br>
+      <span class="cmd">19:59</span> → Найти сломавший коммит. visual-readonly-audit.mjs запущен.<br>
+      <span class="cmd">~20:20</span> → TopBar.tsx найден. 6 строк изменено.<br>
+      <span class="cmd">~20:28</span> → Коммит "Fix compact ledger top bar sizing". Деплой.<br>
+      <span class="cmd">~20:37</span> → Пользователь: <span class="err">"так кнопка обновить данные так и осталась"</span><br>
+      <span class="cmd">~20:44</span> → Codex: ReadTopBar.tsx... SearchesonRefreshAll|Обновить данные...<br>
+      <span class="ok">Итог: 4 коммита, 2 Docker-пересборки, 0 рабочих кнопок.</span>
+    </div>
+    <p class="body-text">
+      Параллельно был обнаружен аудиторской проверкой эпический артефакт:
+      <strong>4 копии функции formatMoney</strong> в кодовой базе,
+      из-за чего суммы отображались то как "€2,000", то как "1,1406 USDT" через запятую.
+      Деньги буквально не знали, кем им быть.
+    </p>
+    <div class="pull-quote">
+      Тип данных: <em>currency</em>. Реальное состояние: экзистенциальный кризис.
+    </div>
+    <p class="body-text">
+      Также обнаружено: <strong>4 разных формулировки</strong> для статуса "ожидает проверки"
+      в одном интерфейсе: "Ждёт ревью", "Проверить", "ОЖИДАЮТ РЕШЕНИЯ", "Записано".
+      Дизайн-консистентность: <span class="dead">4/10</span>.
+    </p>
+    <div class="bar-row">
+      <div class="bar-label">Копий formatMoney в коде <span>4 штуки</span></div>
+      <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Вариантов статуса "ожидает" <span>4 варианта</span></div>
+      <div class="bar-track"><div class="bar-fill orange" data-w="80"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Кнопка "Обновить данные" работает <span>нет</span></div>
+      <div class="bar-track"><div class="bar-fill" data-w="0" style="background:#333;"></div></div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-c">
+    <div class="exhibit-label">Exhibit C · Коммерция</div>
+    <h2 class="exhibit-title">334 Оффера в <em>Заморозке</em><br>и Муджтаба</h2>
+    <p class="body-text">
+      Kinguin заблокировал <strong>334 оффера</strong> — 30% всего каталога.
+      Причина: <em>MS Office 2024 Home &amp; Business</em> блокируется снова и снова,
+      без объяснений. Вчера было открыто 5 тикетов на разблокировку
+      (#1865523, #1865527, #1865531, #1865538, #1865539). Всего.
+    </p>
+    <p class="body-text">
+      Тем временем ручная проверка ключей показала результаты, которые порадуют
+      только похоронное бюро: из <strong>29 ключей Office 2021 ProPlus — 6 мёртвых</strong>.
+      Но настоящий бриллиант — <strong>Office 2019 HomeStudent: 0 живых из 5</strong>.
+      Стопроцентный мёртвый груз. Код ошибки: <span class="dead">0xC004C060</span>.
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Офферов заблокировано Kinguin</div>
+        <div class="metric-value red">334</div>
+        <div class="metric-sub">30% каталога. Причина: загадочная.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Office 2019 ключей живых</div>
+        <div class="metric-value red">0/5</div>
+        <div class="metric-sub">100% мертвечина. Рекорд дня.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Продаж vs Возвратов (Digiseller)</div>
+        <div class="metric-value orange">13/18</div>
+        <div class="metric-sub">Возвратов больше, чем продаж. Маркетинг работает в обратную сторону.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Муджтаба — дни молчания</div>
+        <div class="metric-value red">5</div>
+        <div class="metric-sub">Получил все данные: Supabase, GitHub, Vercel. Исчез.</div>
+      </div>
+    </div>
+    <p class="body-text">
+      Отдельного почёта заслуживает разработчик <strong>Муджтаба</strong>, которому были выданы
+      все production credentials: URL Supabase, API ключи Resend, DNS, репо GitHub,
+      инвайт Vercel. После чего он молчал ровно 5 дней, а когда объявился —
+      попросил прислать всё заново, потому что инвайты истекли.
+    </p>
+    <div class="pull-quote">
+      Муджтаба — это такой разработчик, который получает все ключи от замка,
+      уходит думать, и возвращается спросить, есть ли у вас запасные ключи.
+    </div>
+    <p class="body-text">
+      На Plati пришёл отзыв:
+      <em>"ссылка на скачивание программы не действительная, продавец молчит,
+      не связывайтесь с ним"</em>.
+      Оценка: <span class="dead">-0.28</span>. Рейтинг продавца: <strong>2</strong>.
+    </p>
+  </div>
+
+  <div class="section" id="exhibit-d">
+    <div class="exhibit-label">Exhibit D · Деловая переписка</div>
+    <h2 class="exhibit-title">Письмо Сахилу:<br><em>Финальный вариант</em></h2>
+    <p class="body-text">
+      В 20:52 Саша работал над предложением для <strong>Sahil из Driffle</strong>.
+      ChatGPT предложил первый вариант. Саша ответил: <em>"я хочу чтобы четче было указано
+      что я получу"</em>. ChatGPT переписал. Саша ответил:
+      <span class="highlight">"ytn"</span>.
+    </p>
+    <div class="pull-quote">
+      "ytn" — это когда "нет" слишком короткое, а пальцы уже не те.
+    </div>
+    <p class="body-text">
+      После ещё одной итерации письмо наконец обрело стальной финал:
+      <em>"If this type of visibility/commercial setup is not possible on Driffle,
+      then I think it's better for me to continue only as a regular seller."</em>
+      Решительно. Дипломатично. Конкретно.
+    </p>
+    <p class="body-text">
+      Параллельно в соседней вкладке шёл сеанс с ChatGPT про <strong>Eneba</strong>,
+      где составлялось похожее предложение. Потому что один партнёрский переговорный
+      трек — это недостаточно для настоящего бизнес-мультитаскинга.
+    </p>
+  </div>
+
+  <div class="section" id="exhibit-e">
+    <div class="exhibit-label">Exhibit E · Управление командой</div>
+    <h2 class="exhibit-title">Кото-Профиль<br><em>Не Того Кота</em></h2>
+    <p class="body-text">
+      Весь вечер Саша строил систему геймификации для команды:
+      XP, уровни, ачивки, ранги. Антон набрал <strong>420 XP</strong> (Ур. 11, "Кот-Навигатор"),
+      получил достижение "Ловец мёртвых ключей" — Тир II (193 эскалации).
+      Всё было красиво, пока в 21:10 на экране профиля Антона не появился...
+      <span class="dead">профиль Аиды</span>.
+    </p>
+    <p class="body-text">
+      Хотфикс-коммит <code>2831764</code> исправил ситуацию. Но осадок остался.
+      Аида тем временем держится на уровне 7 "Кот-разведчик" (210 XP)
+      и закрыла за день ровно <strong>0 из 1</strong> запланированных итогов.
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card green">
+        <div class="metric-label">Антон XP (Ловец ключей)</div>
+        <div class="metric-value green">420</div>
+        <div class="metric-sub">Ур. 11 · Кот-Навигатор · Заслуженно</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Чей профиль показало</div>
+        <div class="metric-value orange">АИДЫ</div>
+        <div class="metric-sub">Вместо Антона. Баг поймали. Почти.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Аида — задач за день</div>
+        <div class="metric-value red">0/1</div>
+        <div class="metric-sub">Итог дня не сохранён. Тихая победа.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">QA прогон системы</div>
+        <div class="metric-value orange">52/52</div>
+        <div class="metric-sub">Тесты прошли. Визуально — другое дело.</div>
+      </div>
+    </div>
+    <p class="body-text">
+      Для Keynado.com Codex сгенерировал лендинговую страницу. Оценка Саши:
+      <span class="dead">"пиздец как аишно"</span>. Домен тем временем был недоступен,
+      потому что A/AAAA записи в DNS никто не настроил, хотя сайт исправно работал
+      на localhost:8000.
+    </p>
+  </div>
+
+  <div class="section" id="exhibit-f">
+    <div class="exhibit-label">Exhibit F · Образование</div>
+    <h2 class="exhibit-title">База Данных:<br><em>73 из 100</em></h2>
+    <p class="body-text">
+      UniMelb зафиксировал итог: <strong>Database Systems — 73/100</strong>
+      (Second Class Honours B). Для сравнения: <strong>Intro to Programming — 92/100</strong>.
+      Ирония судьбы состоит в том, что человек, который весь день строит дашборды с
+      суммарным результатом €0 и четырьмя копиями formatMoney,
+      получил B по базам данных.
+    </p>
+    <div class="pull-quote">
+      Экзамен по SQL сдан на 73. В рабочем коде — 4 функции форматирования денег
+      и inline view в каждом втором запросе. Академия vs практика: 0:0.
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Database Systems <span>73 / 100</span></div>
+      <div class="bar-track"><div class="bar-fill orange" data-w="73"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Introduction to Programming <span>92 / 100</span></div>
+      <div class="bar-track"><div class="bar-fill green" data-w="92"></div></div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-g">
+    <div class="exhibit-label">Exhibit G · Хронология</div>
+    <h2 class="exhibit-title">С 10 Утра<br>До <em>Полуночи</em></h2>
+    <div class="timeline">
+      <div class="tl-item"><span class="tl-time">10:50</span>Открывает Ledger. 50 критических инцидентов. AI онлайн. Добро пожаловать в рабочий день.</div>
+      <div class="tl-item"><span class="tl-time">15:40</span>Gmail admin@getitcheap.pro: 309 писем в инбоксе, 304 в спаме. Почта живёт своей жизнью.</div>
+      <div class="tl-item"><span class="tl-time">16:29</span>Ledger: 19 задач в очереди. Позиция №1: Keysender. Позиция №19: G2A ответы на отзывы. Никуда не тронулись.</div>
+      <div class="tl-item"><span class="tl-time">17:34</span>Notion Due Shift Log: несколько задач перенесено на август. Метод GTD "перенести и забыть".</div>
+      <div class="tl-item"><span class="tl-time">19:09</span>Финансовый дашборд: €0 по всем пяти площадкам. Google Sheets недоступны. Подключён "запасной снимок".</div>
+      <div class="tl-item"><span class="tl-time">19:59</span>Охота на сломавший коммит. Запущен visual-readonly-audit.mjs. Codex занят 33 минуты.</div>
+      <div class="tl-item"><span class="tl-time">20:52</span>ChatGPT: письмо Сахилу в Driffle. Три итерации. Итог: "ytn".</div>
+      <div class="tl-item"><span class="tl-time">22:15</span>Codex: улучшение раздела закупок. "Суммы должны быть в цветных баблах, а не в серых с цветной обводкой."</div>
+      <div class="tl-item"><span class="tl-time">23:41</span>Ledger: 50 открытых задач. Закрыто сегодня: 0. Build: DEV · LOCAL. Это тот момент, когда понимаешь.</div>
+      <div class="tl-item"><span class="tl-time">23:53</span>Codex: "Настроить ежедневный roast deploy". Автоматический роаст в полночь — высшая форма самосознания.</div>
+      <div class="tl-item"><span class="tl-time">00:22</span>Спрашивает: "как сделать чтобы там была история и все эти файлы сохранились?" Первый раз за день думает о сохранении результатов.</div>
+    </div>
+    <div class="divider"><span>◆</span></div>
+    <p class="body-text">
+      В промежутке: проверка рейсов <strong>Мельбурн → Фиджи</strong>.
+      20,700 Qantas Points + $124 AUD. Даты: 27 июля — 10 августа.
+      Примечательно, что аренда в Докландс в этот момент была просрочена
+      (<span class="dead">3 дня, первое уведомление</span>).
+      Но Фиджи — это важно.
+    </p>
+    <p class="body-text">
+      Также проводилось исследование <strong>ТСПУ</strong> — системы глубокой инспекции пакетов
+      Роскомнадзора. Вероятно, по личным соображениям. Или академический интерес.
+    </p>
+  </div>
+
+  <div class="section" id="exhibit-h">
+    <div class="exhibit-label">Exhibit H · Итоговая Статистика</div>
+    <h2 class="exhibit-title">Цифры Дня,<br><em>Которые Не Лгут</em></h2>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Codex-сессий открыто</div>
+        <div class="metric-value orange">7+</div>
+        <div class="metric-sub">Поставщики, Помощник, Закупки, События, Топ-бар, Roast, Ежедневный deploy</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Playwright тестов (QA)</div>
+        <div class="metric-value green">52/52</div>
+        <div class="metric-sub">Прошли. Кнопка всё равно не работает.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">ChatGPT → Notion MCP</div>
+        <div class="metric-value orange">3</div>
+        <div class="metric-sub">Попытки подключения. Safari сдался первым.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Зарплат к выплате (USDT)</div>
+        <div class="metric-value yellow">29.5к</div>
+        <div class="metric-sub">Расчёт до проверки. Несохранённые изменения.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">ROAS G2A (июнь)</div>
+        <div class="metric-value green">4.09x</div>
+        <div class="metric-sub">Хорошие новости. Прошлый месяц.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Difmark чистый доход</div>
+        <div class="metric-value red">€348</div>
+        <div class="metric-sub">BAD. Рынок в риске. 1% от портфеля.</div>
+      </div>
+    </div>
+    <table class="roast-table">
+      <thead><tr><th>Площадка</th><th>Профит (май)</th><th>Маржа</th><th>Статус</th></tr></thead>
+      <tbody>
+        <tr><td>G2A</td><td style="color:#4caf50;">€27,512</td><td>47%</td><td style="color:#4caf50;">OK ▲51%</td></tr>
+        <tr><td>Kinguin</td><td style="color:#4caf50;">€7,979</td><td>66%</td><td style="color:#4caf50;">OK ▲28%</td></tr>
+        <tr><td>K4G</td><td>€2,089</td><td>58%</td><td style="color:#4caf50;">OK ▲4%</td></tr>
+        <tr><td>Eneba</td><td>€1,615</td><td>89%</td><td style="color:#4caf50;">OK ▲148%</td></tr>
+        <tr><td>Difmark</td><td style="color:var(--red);">€348</td><td>67%</td><td style="color:var(--red);">ПЛОХО ▼12.4%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section" id="verdict">
+    <div class="exhibit-label">Финальный Вердикт</div>
+    <div class="verdict-box">
+      <div class="verdict-title">ВЕРДИКТ</div>
+      <div class="verdict-score">C+</div>
+      <div class="verdict-score-label">Итоговая оценка дня · по шкале WTF-to-Legend</div>
+      <div style="height:24px;"></div>
+      <p class="verdict-body">
+        Саша провёл 13 часов в <strong>Ledger</strong>, который весь день показывал €0.
+        Открыл <strong>7+ Codex-сессий</strong>, исправил кнопку, которая не исправилась.
+        Запустил <strong>52 теста</strong>, которые прошли, пока баги жили в проде.
+        Написал три варианта письма Сахилу и ответил <strong>"ytn"</strong>.
+        Планировал отпуск на Фиджи с просроченной арендой.
+        В полночь настроил автоматический роаст самого себя.
+      </p>
+      <p class="verdict-body">
+        Но вот что важно: бизнес делает <strong>€38к/месяц</strong>.
+        Команда закрыла 81 задачу за неделю. KPI пересматриваются.
+        Система геймификации строится. Это не хаос — это <strong>стройка</strong>.
+        Просто очень шумная.
+      </p>
+      <p class="verdict-body" style="color: var(--orange); font-style: italic; font-size: .95rem;">
+        Ты не прокрастинируешь. Ты строишь инфраструктуру для того,
+        чтобы перестать прокрастинировать. Это другое. Почти.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  The Sasha Report · Vol. 003 · 8 июля 2026 · Мельбурн, Австралия ·
+  Все факты реальны. Все детали болезненны. С любовью.
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+  );
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+  const barObserver = new IntersectionObserver(
+    (entries) => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.bar-fill[data-w]').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+      }
+    }),
+    { threshold: 0.2 }
+  );
+  document.querySelectorAll('.section').forEach(s => barObserver.observe(s));
+</script>
+</body>
+</html>

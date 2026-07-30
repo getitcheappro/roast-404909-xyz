@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Sasha Report — Vol. 004 — 9 июля 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=Oswald:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #e63312;
+    --orange: #f57c00;
+    --yellow: #ffd600;
+    --dark: #0a0a0a;
+    --dark2: #111111;
+    --dark3: #1a1a1a;
+    --dark4: #242424;
+    --text: #e8e0d0;
+    --muted: #888880;
+    --border: #2a2a2a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Special Elite', serif;
+    overflow-x: hidden;
+  }
+  .masthead {
+    background: var(--dark2);
+    border-bottom: 3px solid var(--red);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, rgba(230,51,18,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .vol-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: .72rem;
+    letter-spacing: .35em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .masthead h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: .92;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 0 60px rgba(230,51,18,.5);
+  }
+  .masthead h1 span { color: var(--red); }
+  .issue-line {
+    margin-top: 16px;
+    font-family: 'Oswald', sans-serif;
+    font-size: .85rem;
+    letter-spacing: .2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .subtitle {
+    margin-top: 14px;
+    font-size: 1.05rem;
+    color: var(--orange);
+    font-style: italic;
+  }
+  .fire-strip {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: var(--red);
+    color: #fff;
+    font-family: 'Anton', sans-serif;
+    font-size: .75rem;
+    letter-spacing: .15em;
+    padding: 5px 14px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .badge.yellow { background: var(--yellow); color: #000; }
+  .badge.orange { background: var(--orange); }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .section {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: none;
+  }
+  .exhibit-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .68rem;
+    letter-spacing: .45em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .exhibit-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .exhibit-title em { color: var(--orange); font-style: normal; }
+  .body-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .body-text strong { color: var(--orange); font-style: normal; }
+  .body-text .highlight { color: var(--yellow); font-weight: bold; }
+  .body-text .dead { color: var(--red); font-weight: bold; }
+  .pull-quote {
+    border-left: 4px solid var(--red);
+    padding: 14px 22px;
+    margin: 24px 0;
+    background: var(--dark3);
+    font-size: 1.15rem;
+    color: var(--orange);
+    font-style: italic;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .metric-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--red);
+    padding: 16px 18px;
+    border-radius: 2px;
+  }
+  .metric-card.orange { border-top-color: var(--orange); }
+  .metric-card.yellow { border-top-color: var(--yellow); }
+  .metric-card.green { border-top-color: #4caf50; }
+  .metric-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: #fff;
+  }
+  .metric-value.red { color: var(--red); }
+  .metric-value.orange { color: var(--orange); }
+  .metric-value.yellow { color: var(--yellow); }
+  .metric-value.green { color: #4caf50; }
+  .metric-sub {
+    font-size: .78rem;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .bar-row { margin: 12px 0; }
+  .bar-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  .bar-label span { color: var(--text); }
+  .bar-track {
+    height: 8px;
+    background: var(--dark4);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(.25,.46,.45,.94);
+  }
+  .bar-fill.orange { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+  .bar-fill.green { background: linear-gradient(90deg, #2e7d32, #4caf50); }
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin: 20px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 18px;
+    font-size: .9rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 6px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--dark);
+  }
+  .tl-time {
+    font-family: 'Oswald', sans-serif;
+    font-size: .7rem;
+    color: var(--orange);
+    letter-spacing: .1em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .log-block {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: .88rem;
+    color: var(--muted);
+  }
+  .log-block .cmd { color: var(--orange); }
+  .log-block .ok { color: #4caf50; }
+  .log-block .err { color: var(--red); }
+  .log-block .comment { color: #555; }
+  .verdict-box {
+    background: linear-gradient(135deg, var(--dark2) 0%, #1c0a00 100%);
+    border: 2px solid var(--red);
+    padding: 40px 36px;
+    text-align: center;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  .verdict-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(230,51,18,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .verdict-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    color: var(--red);
+    text-transform: uppercase;
+    text-shadow: 0 0 40px rgba(230,51,18,.6);
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .verdict-body {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto 18px;
+  }
+  .verdict-body strong { color: var(--orange); }
+  .verdict-score {
+    font-family: 'Anton', sans-serif;
+    font-size: 5rem;
+    color: var(--yellow);
+    line-height: 1;
+    margin: 10px 0;
+    text-shadow: 0 0 30px rgba(255,214,0,.4);
+  }
+  .verdict-score-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: .72rem;
+    letter-spacing: .2em;
+    color: #333;
+    text-transform: uppercase;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0;
+    color: var(--border);
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .divider span {
+    font-family: 'Anton', sans-serif;
+    font-size: .7rem;
+    letter-spacing: .3em;
+    color: var(--red);
+  }
+  @media (max-width: 600px) {
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .verdict-box { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <span class="vol-tag">The Sasha Report · Vol. 004 · Edition: 9 июля 2026 г. · Мельбурня!</span>
+  <h1>THE <span>SASHA</span><br>REPORT</h1>
+  <div class="issue-line">Разоблачающий ежедневник одного предпринимателя · с любовью и без пощады</div>
+  <p class="subtitle">"Сегодня я наконец наймусь главным. Честно."</p>
+  <div class="fire-strip">
+    <span class="badge">0 задач закрыто</span>
+    <span class="badge orange">Кнопка всё ещё сломана</span>
+    <span class="badge yellow">Универ — нет данных</span>
+    <span class="badge">Автоматизация роаста ✅</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section" id="exhibit-a">
+    <div class="exhibit-label">Exhibit A · Мета-уровень</div>
+    <h2 class="exhibit-title">Сначала — Автоматизируй<br><em>Роаст</em></h2>
+    <p class="body-text">
+      В 00:10 Саша открыл Codex и попросил: <strong>"как мне настроить чтобы была автоматизация"</strong>
+      ежедневного деплоя роаст-сайта. Codex работал 8 минут. Создал GitHub Actions workflow,
+      запустил деплой, проверио через curl. <span class="highlight">Роаст теперь автоматизирован.</span>
+    </p>
+    <p class="body-text">
+      Поздравляем. В 00:22 9 июля 2026 года Саша вместо снастроил работрает фиксирилать каждый его день.
+      сначала — инфраструктура. Потом, можемь бымольшом. Или бизнес. Или учёба. Но главное — автоматизация фиксации прокрастинации.
+    </p>
+    <div class="pull-quote">
+      Он не сделал задачи, но он сделал CI/CD для напоминаний о том тратиш дни впустую.
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Минут на настройку автоматизации</div>
+        <div class="metric-value orange">8</div>
+        <div class="metric-sub">Вместо сна. Priority: obviously.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Задач закрыто до 00:22</div>
+        <div class="metric-value red">0</div>
+        <div class="metric-sub">Но workflow уже в main.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-b">
+    <div class="exhibit-label">Exhibit B · Утро</div>
+    <h2 class="exhibit-title">Пока Пусто.<br><em>Всё ещё Пусто.</em></h2>
+    <p class="body-text">
+      В 10:38 Саша открыл <strong>ledger.404909.xyz</strong>. BUILD: <code>E615E7EBDA71</code>,
+      собран 8 июля в 17:07 по Инкоптов. Создал: <code>limited</code>, <code>isActive: false</code>.
+      Система была честна: <em>"Пока пусто. В Notion нет закрытых сегодня задачи, а Completed Tasks Log ещё не отдалм."</em>
+    </p>
+    <p class="body-text">
+      Трив задравлнование заказ. Keysender. Gmail. Out of stock. Сйнон были в 03:49 МСК —
+      то есть Саша проснулся, а данные уже старились 7 часов. Но Ledger вежливо
+      предупреждал: <em>"Продажи сейчас в режиме mock/partial, суммы не подтверждаю."</em>
+      Это не баг. Это философия.
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Закрыто сегодня (в 10:49)</div>
+        <div class="metric-value red">0</div>
+        <div class="metric-sub">Completed Tasks Log молчит.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Возраст билда</div>
+        <div class="metric-value orange">17 ч</div>
+        <div class="metric-sub">E615E7EBDA71. Стаѱильность превыше всего.</div>
+      </div>
+      <div class="metric-card yellow">
+        <div class="metric-label">Событий в очереди</div>
+        <div class="metric-value yellow">50</div>
+        <div class="metric-sub">48 Notion + 2 KPI. Красота.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-c">
+    <div class="exhibit-label">Exhibit C · Кроличьи Норы</div>
+    <h2 class="exhibit-title">Kava, Кенгуру<br><em>и Термоядерный Ноль</em></h2>
+    <p class="body-text">
+      В 13:45 началась классическая сессия. iHerb. Кава. Поиск <strong>"kava kava melbourne"</strong>.
+      GO Healthy Kava 4200 — 60 капсул за <strong>$25.24</strong>. Предупреждение:
+      <em>"May harm the liver. Not recommended for use by pregnant or lactating women."</em>
+      Саша смотрел на это как на инструкцию к жизни, а не как на предупреждение.
+    </p>
+    <p class="body-text">
+      Параллельно в 11:10 — <strong>Qantas</strong>. Рейсы MEL→SYD→NUK. Monarto Safari Resort.
+      Самый большой зоопарк Австралии. Билет от $57. <span class="dead">Инфо: "Annual Membership pays for itself in 3 visits."</span>
+      Саша, который не закрыл ни одной задачи утром, исследовал, сколько раз нужно сходить в зоопарк,
+      чтобы окупить абонемент. Календарь при этом показывал: <em>"Invalid Credentials. Sign in?"</em>
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Доза кавы (kavalactones)</div>
+        <div class="metric-value">70-250</div>
+        <div class="metric-sub">мг/день. Печень в опасности.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Стоимость Kava капсул</div>
+        <div class="metric-value orange">$25.24</div>
+        <div class="metric-sub">RRP $50.49. Саша любит скидки.</div>
+      </div>
+      <div class="metric-card yellow">
+        <div class="metric-label">Еоопарков посещено</div>
+        <div class="metric-value red">0</div>
+        <div class="metric-sub">Но абонемент уже почти окуплен.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-d">
+    <div class="exhibit-label">Exhibit D · Разработка</div>
+    <h2 class="exhibit-title">4 Копии <em>formatMoney</em><br>и Одна Сломанная Кнопка</h2>
+    <p class="body-text">
+      В 13:57 Codex получил заказ: <strong>"Унифицировать UI Local HQ"</strong>.
+      16 минут. Playwright скриншоты. Шапки сдулись с 145px до 54px.
+      <code>pnpm lint</code> — passed. <code>pnpm typecheck</code> — passed. <code>pnpm build</code> — passed.
+      QA: 52/52 тестов. Всё красиво. Всё компактно. Всё бессмысленно, если кнопка не работает.
+    </p>
+    <p class="body-text">
+      В 15:56 Леджер тонсистенновый ываюко запустора пор стронимм: <strong>4 копии formatMoney</strong> в кодовой базе.
+      Токоедины осывой стопримон ‬"2,000"</em> а кокой <em>"1,1406 USDT"</em> через запятую.
+      Четыре разных статуса "ожидает": "Ждёт ревью", "Проверить", "ОЖИДАЮТ РЕШЕНИЯ", "Записано".
+      Он стабой непор свой родауператм: <strong>кнопка "обсновить данные"</strong> осЂалась сооманной после 4 коммитов и 2 Docker-пересборки.
+    </p>
+    <div class="log-block">
+      <span class="comment"># Хроника борьбы с кнопок «обсновить данные»</span><br>
+      <span class="cmd">15:56</span> → 4 copies formatMoney. Найдены в аудите.<br>
+      <span class="cmd">16:38</span> → Codex: UI refactoring, 16 min, 52/52 Playwright passed.<br>
+      <span class="cmd">~19:59</span> → Пользователь: <span class="err">"так кнопка обновить данные так и осталась"</span><br>
+      <span class="cmd">~20:28</span> → Коммитов "Fix compact ledger top bar sizing". Деплой.<br>
+      <span class="ok">Итог: 4 коммита, 2 Docker-пересборки, 52/52 QA, 0 рабочих кнопок.</span>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Копий formatMoney</div>
+        <div class="metric-value red">4</div>
+        <div class="metric-sub">Единство — это для сла�ых.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Вариантов "ожидает"</div>
+        <div class="metric-value orange">4</div>
+        <div class="metric-sub">Консистентность: 0/10.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Рабочих кнопок "обновить"</div>
+        <div class="metric-value red">0</div>
+        <div class="metric-sub">Но шапка теперь 54px. Win.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-e">
+    <div class="exhibit-label">Exhibit E · Бизнес-Правила</div>
+    <h2 class="exhibit-title">334 Оффера в<br><em>Заморозке</em></h2>
+    <p class="body-text">
+      В 19:45 и 21:34 Саша обновлял <strong>Brain Memory</strong> — Notion-библиотеку бизнес-правил.
+      Kinguin: retail-офферы только без phone activation, OEM-перенос, unblock требует закрытия всех репортов,
+      Microsoft verification требует 20+ ключей, LTSC сам посебе не доказывает MAK.
+      Eneba: high-risk 3 EUR fixed + 50%, zero tolerance.
+    </p>
+    <p class="body-text">
+      Звучито как военная доктрана. На деле — <strong>334 офферл в блоке</strong> на Kinguin.
+      5 дикетово на разблокировку (#1865523, #1865527, #1865531, #1865538, #1865539).
+      Andrey должен был их расследовать. Балансы при этом солидные: G2A <strong>€39,674.73</strong>.
+      Kinguin <strong>€35,529.81</strong>, Gamivo <strong>€4,340.23</strong>.
+      Расходы: Anthropic <strong>€216</strong> (привет, AI), Origin Energy <strong>AUD 67.45</strong>.
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Офферов заблокировано</div>
+        <div class="metric-value red">334</div>
+        <div class="metric-sub">30% каталога. Доктрина не помогает.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Баланс G2A</div>
+        <div class="metric-value orange">€39.7k</div>
+        <div class="metric-sub">Который нельзя трогать, потому что споры.</div>
+      </div>
+      <div class="metric-card yellow">
+        <div class="metric-label">Счёт от Anthropic</div>
+        <div class="metric-value yellow">€216</div>
+        <div class="metric-sub">За автоматизацию прокрастинации.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-f">
+    <div class="exhibit-label">Exhibit F · Дипломатия</div>
+    <h2 class="exhibit-title">Eneba Сказал <em>Нет</em><br>и Keysender Не Сказал Ничего</h2>
+    <p class="body-text">
+      В 19:25 Саша переписывался с <strong>Martynas</strong> (Eneba). Предложил
+      <em>preferred visibility / commercial pilot arrangement</em> для Microsoft.
+      Ответ: <strong>"We're not looking to invest in a preferred visibility / commercial pilot arrangement for the Microsoft category at this time."</strong>
+      Дипломатия — это умение получить вежливый отказ и записать его в Gmail.
+    </p>
+    <p class="body-text">
+      Тем временем в 19:09 Discord с <strong>Keysender</strong>: auto-pricing bot не работает,
+      K4G API integration под review, orders остаются в статусе <em>reserved</em> и не отправляются.
+      Omar: <em>"Auto-price is 1 here and 0 for business"</em>. Саша:
+      <em>"I don't need it for business, I sell retail"</em>.
+      Retail против Business. Классика.
+    </p>
+    <div class="pull-quote">
+      Eneba отказал в visibility. Kinguin заблокировал 334 оффера. Keysender не отправляет ключи.
+      Зато геймификация в Леджере работает. 52/52.
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-g">
+    <div class="exhibit-label">Exhibit G · Геймификация</div>
+    <h2 class="exhibit-title">Кот-Навигатор <em>и</em><br>Кот-разведчик</h2>
+    <p class="body-text">
+      В 13:53 Саша обсуждал с Claude геймификацию команды. Закоммичено <code>ab21015</code>:
+      XP ребаланс для Антона. Объёмные карточки подешевели, качественные подорожали.
+      Anton: <strong>420 XP</strong>, Ур. 11, титул <strong>"Кот-Навигатор"</strong>, ачивка
+      <strong>"Ловец мёртвых ключей" — Тир II</strong> (193 эскалацик).
+      Aida: <strong>210 XP</strong>, Ур. 7, <strong>"Кот-разведчик"</strong>.
+      Вывод: Аида разведывает, Антон ловит мёртвые ключи, а Сашины сТроится того,
+      чтобы накрывать задачи.
+    </p>
+    <p class="body-text">
+      Награеѳон за рапоченсы платину: <em>"свободная пятница после обеда"</em>, <em>"щит недели"</em>,
+      <em>"кот месяца на дашборде"</em>. Команда закрыла 112 задач за 7 дней, 23 —  бегодня.
+      А Сашины задачи: 0 закрыто. Но нато уоченной полный доступ и админка.
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Anton XP / Уровень</div>
+        <div class="metric-value">420 / 11</div>
+        <div class="metric-sub">Кот-Навигатор. 193 мёртвых ключа.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Aida XP / Уровень</div>
+        <div class="metric-value orange">210 / 7</div>
+        <div class="metric-sub">Кот-разведчик. Выкладка 46.4%.</div>
+      </div>
+      <div class="metric-card yellow">
+        <div class="metric-label">Сашины задачи закрыты</div>
+        <div class="metric-value red">0</div>
+        <div class="metric-sub">Но доступ полный. Прямо как в зинни.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="exhibit-h">
+    <div class="exhibit-label">Exhibit H · Университет</div>
+    <h2 class="exhibit-title">INFO90002 / ISYS90026<br><em>Нет Данных</em></h2>
+    <p class="body-text">
+      За весь день 9 июля в контексте <strong>нет ни одного снимка</strong>, связанного с UniMelb,
+      INFO90002 или ISYS90026. Ни лекций, ни заданий, ни Canvas. Ничего.
+    </p>
+    <p class="body-text">
+      Саша в Мельбурне на студенческой визе subclass 500. Целится в Master of CS with AI
+      в University of Melbourne. Но вчера он изучал Kava, Qantas и формат денег.
+      Образовательный прогресс: <span class="dead">стабильный ноль.</span>
+    </p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Лекций посещено</div>
+        <div class="metric-value red">0</div>
+        <div class="metric-sub">Онлайностал тоже не открывались.</div>
+      </div>
+      <div class="metric-card orange">
+        <div class="metric-label">Заданий сделано</div>
+        <div class="metric-value orange">0</div>
+        <div class="metric-sub">Но зато Ledger солеги обновлён.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="verdict">
+    <div class="verdict-box">
+      <div class="verdict-title">Вердикт</div>
+      <div class="verdict-body">
+        <strong>Саша потратил 9 июля на настройку машины, которая будет говорить ему, что он тратит дни впустую.</strong>
+        Он не закрыл ни одной задачи. Он не пошёл на занятия. Он не отправил ни одноги K4G-заказа.
+        Он зато написал 4 копии formatMoney, убедил Eneba в своей неубедительности,
+        исследовал пѵченочный яд за $25.24 и спланировал поход в зоопарк, который не состоится.
+      </div>
+      <div class="verdict-score">F5</div>
+      <div class="verdict-score-label">Breathe. Stop. Don't collapse.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  The Sasha Report · Автоматически сгенерировано из цифровых следов · Данные за 9 июля 2026
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.bar-fill').forEach(b => {
+      const w = b.getAttribute('data-w');
+      if (w) b.style.width = w + '%';
+    });
+  });
+</script>
+
+</body>
+</html>

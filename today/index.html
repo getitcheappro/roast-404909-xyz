@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <title>Today — Roast Archive</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #090909;
+        --panel: #151515;
+        --line: #343434;
+        --text: #f3eee7;
+        --muted: #a49b90;
+        --accent: #ff6b00;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+      }
+
+      header {
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        gap: 16px;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        padding: 18px 22px;
+      }
+
+      .label {
+        color: var(--accent);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 1.1;
+        margin: 4px 0 0;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .button {
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--text);
+        display: inline-flex;
+        font-size: 13px;
+        font-weight: 800;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 14px;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .button:hover {
+        border-color: var(--accent);
+        color: #ffbf36;
+      }
+
+      .viewer {
+        background: #0d0d0d;
+        min-height: 80vh;
+      }
+
+      iframe {
+        border: 0;
+        display: block;
+        min-height: 900px;
+        width: 100%;
+      }
+
+      .empty {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+        display: none;
+        line-height: 1.6;
+        margin: 32px auto;
+        max-width: 680px;
+        padding: 24px;
+      }
+
+      @media (max-width: 720px) {
+        header {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <div class="label">Latest report</div>
+        <h1 id="title">Roast Archive</h1>
+      </div>
+      <a class="button" href="/history/">History</a>
+      <a class="button" id="permalink" href="/history/">Permanent</a>
+    </header>
+    <main>
+      <div class="viewer" id="viewer">
+        <iframe id="reportFrame" title="Latest roast report"></iframe>
+      </div>
+      <div class="empty" id="emptyState">No reports are published yet.</div>
+    </main>
+    <script>
+      async function loadReports() {
+        const response = await fetch('/reports.json', { cache: 'no-store' });
+        if (!response.ok) return [];
+        const reports = await response.json();
+        return Array.isArray(reports) ? reports : [];
+      }
+
+      function resizeFrame(frame) {
+        const frameDocument = frame.contentDocument;
+        if (!frameDocument) return;
+        frameDocument.querySelectorAll('.reveal, .exhibit, .section').forEach((node) => {
+          node.classList.add('visible');
+        });
+        frameDocument.querySelectorAll('.meter-fill[data-width]').forEach((node) => {
+          node.style.width = `${node.dataset.width}%`;
+        });
+        frame.style.height = `${Math.max(frameDocument.documentElement.scrollHeight, frameDocument.body.scrollHeight, 900)}px`;
+      }
+
+      async function init() {
+        const reports = await loadReports();
+        const latest = reports.sort((a, b) => a.date.localeCompare(b.date)).at(-1);
+        const frame = document.querySelector('#reportFrame');
+        if (!latest) {
+          document.querySelector('#viewer').style.display = 'none';
+          document.querySelector('#emptyState').style.display = 'block';
+          return;
+        }
+        document.querySelector('#title').textContent = latest.title;
+        document.querySelector('#permalink').href = latest.path;
+        frame.addEventListener('load', () => resizeFrame(frame));
+        frame.src = latest.path;
+      }
+
+      init();
+    </script>
+  </body>
+</html>

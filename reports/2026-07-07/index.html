@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex"/>
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex"/>
+<title>The Sasha Report — 07.07.2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=Oswald:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --fire: #ff4500;
+    --ember: #ff6a00;
+    --gold: #ffb347;
+    --ash: #1a1a1a;
+    --coal: #111;
+    --smoke: #2a2a2a;
+    --text: #e8e0d0;
+    --dim: #9a8a7a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--coal);
+    color:var(--text);
+    font-family:'Special Elite',serif;
+    overflow-x:hidden;
+  }
+
+  /* HEADER */
+  .masthead{
+    background:var(--ash);
+    border-bottom:4px solid var(--fire);
+    padding:3rem 2rem 2rem;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .masthead::before{
+    content:'';
+    position:absolute;inset:0;
+    background:repeating-linear-gradient(
+      45deg,
+      transparent,transparent 10px,
+      rgba(255,69,0,.04) 10px,rgba(255,69,0,.04) 20px
+    );
+    pointer-events:none;
+  }
+  .issue-line{
+    font-family:'Oswald',sans-serif;
+    font-size:.75rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--fire);
+    margin-bottom:.5rem;
+  }
+  .title{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(3rem,10vw,7rem);
+    line-height:1;
+    background:linear-gradient(135deg,var(--fire) 0%,var(--gold) 60%,var(--ember) 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    text-shadow:none;
+    letter-spacing:-.02em;
+  }
+  .subtitle{
+    font-family:'Oswald',sans-serif;
+    font-size:1rem;
+    color:var(--gold);
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    margin-top:.5rem;
+  }
+  .dateline{
+    margin-top:1.5rem;
+    font-size:.8rem;
+    color:var(--dim);
+    letter-spacing:.15em;
+  }
+
+  /* LEAD */
+  .lead-box{
+    max-width:860px;
+    margin:2.5rem auto;
+    padding:1.5rem 2rem;
+    border-left:5px solid var(--fire);
+    background:var(--smoke);
+    font-size:1.1rem;
+    line-height:1.7;
+  }
+  .lead-box strong{color:var(--gold);}
+
+  /* METRICS BAR */
+  .metrics-bar{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:1px;
+    background:var(--fire);
+    border-top:2px solid var(--fire);
+    border-bottom:2px solid var(--fire);
+    margin:0;
+  }
+  .metric{
+    background:var(--ash);
+    padding:1.2rem 1rem;
+    text-align:center;
+  }
+  .metric-val{
+    font-family:'Anton',sans-serif;
+    font-size:2.2rem;
+    color:var(--fire);
+    display:block;
+    line-height:1;
+  }
+  .metric-label{
+    font-size:.65rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--dim);
+    margin-top:.3rem;
+    display:block;
+  }
+
+  /* SECTION WRAPPER */
+  .container{max-width:900px;margin:0 auto;padding:0 1.5rem;}
+
+  /* EXHIBIT */
+  .exhibit{
+    margin:3rem 0;
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .exhibit.visible{opacity:1;transform:translateY(0);}
+
+  .exhibit-tag{
+    font-family:'Oswald',sans-serif;
+    font-size:.7rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--fire);
+    margin-bottom:.3rem;
+  }
+  .exhibit-title{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(1.6rem,4vw,2.5rem);
+    line-height:1.1;
+    color:var(--gold);
+    border-bottom:2px solid var(--smoke);
+    padding-bottom:.5rem;
+    margin-bottom:1rem;
+  }
+  .exhibit-body{
+    line-height:1.8;
+    font-size:1rem;
+    color:var(--text);
+  }
+  .exhibit-body p{margin-bottom:.8rem;}
+  .exhibit-body em{color:var(--gold);font-style:normal;}
+  .exhibit-body .burn{color:var(--fire);}
+  .exhibit-body .code{
+    font-family:monospace;
+    background:var(--smoke);
+    color:var(--ember);
+    padding:.1em .4em;
+    border-radius:3px;
+    font-size:.9em;
+  }
+
+  /* SCALE / METER */
+  .scale-wrap{margin:1.2rem 0;}
+  .scale-label{
+    display:flex;justify-content:space-between;
+    font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);margin-bottom:.3rem;
+  }
+  .scale-label span:last-child{color:var(--fire);}
+  .scale-track{
+    background:var(--smoke);
+    border-radius:2px;height:10px;
+    overflow:hidden;
+  }
+  .scale-fill{
+    height:100%;
+    border-radius:2px;
+    background:linear-gradient(90deg,var(--fire),var(--gold));
+    width:0;
+    transition:width 1s ease .4s;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote{
+    margin:1.5rem 0;
+    padding:1rem 1.5rem;
+    border:1px solid var(--fire);
+    border-left:5px solid var(--fire);
+    background:rgba(255,69,0,.06);
+    font-size:1.05rem;
+    line-height:1.7;
+    font-style:italic;
+    color:var(--gold);
+  }
+
+  /* DIVIDER */
+  .divider{
+    border:none;
+    border-top:1px solid var(--smoke);
+    margin:2rem 0;
+  }
+  .section-break{
+    text-align:center;
+    color:var(--fire);
+    font-family:'Anton',sans-serif;
+    font-size:1.5rem;
+    margin:1rem 0;
+    letter-spacing:.5em;
+  }
+
+  /* VERDICT */
+  .verdict{
+    background:var(--ash);
+    border-top:4px solid var(--fire);
+    border-bottom:4px solid var(--fire);
+    padding:3rem 2rem;
+    margin:3rem 0 0;
+    text-align:center;
+  }
+  .verdict-label{
+    font-family:'Oswald',sans-serif;
+    font-size:.8rem;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--fire);
+    margin-bottom:.8rem;
+  }
+  .verdict-title{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(2rem,6vw,4rem);
+    color:var(--gold);
+    line-height:1;
+    margin-bottom:1.5rem;
+  }
+  .verdict-body{
+    max-width:680px;
+    margin:0 auto;
+    font-size:1rem;
+    line-height:1.8;
+    color:var(--text);
+  }
+  .verdict-body em{color:var(--fire);font-style:normal;font-weight:bold;}
+
+  /* FOOTER */
+  footer{
+    text-align:center;
+    padding:2rem;
+    font-size:.7rem;
+    color:var(--dim);
+    letter-spacing:.1em;
+  }
+
+  /* FLAME EMOJI HEADER DECORATION */
+  .flame-row{
+    font-size:1.5rem;
+    letter-spacing:.3rem;
+    margin-bottom:.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ MASTHEAD ═══════════════════ -->
+<header class="masthead">
+  <div class="flame-row">🔥🔥🔥</div>
+  <div class="issue-line">Выпуск № 07 &bull; Вторник, 7 июля 2026 г. &bull; Melbourne, AU</div>
+  <div class="title">THE SASHA REPORT</div>
+  <div class="subtitle">Ежедневная хроника страданий и претензий к Kinguin</div>
+  <div class="dateline">
+    Подготовлено по материалам скриншотов &bull; Все факты реальны &bull; Ни один тикет не был закрыт в процессе съёмок
+  </div>
+</header>
+
+<!-- ═══════════════════ METRICS ═══════════════════ -->
+<div class="metrics-bar">
+  <div class="metric">
+    <span class="metric-val">332</span>
+    <span class="metric-label">заблокированных офферов на Kinguin</span>
+  </div>
+  <div class="metric">
+    <span class="metric-val">4</span>
+    <span class="metric-label">тикета создано за один присест</span>
+  </div>
+  <div class="metric">
+    <span class="metric-val">50</span>
+    <span class="metric-label">открытых задач в Ledger к вечеру</span>
+  </div>
+  <div class="metric">
+    <span class="metric-val">6</span>
+    <span class="metric-label">задач закрыто за весь день</span>
+  </div>
+  <div class="metric">
+    <span class="metric-val">23:01</span>
+    <span class="metric-label">время проверки оценок в UniMelb</span>
+  </div>
+  <div class="metric">
+    <span class="metric-val">0</span>
+    <span class="metric-label">изображений на ачивках (утром)</span>
+  </div>
+</div>
+
+<!-- ═══════════════════ LEAD ═══════════════════ -->
+<div class="container">
+  <div class="lead-box">
+    Во вторник, 7 июля 2026 года, <strong>Александр Карзанов</strong> — предприниматель, студент МИС, владелец дашборда с кошачьими ачивками — провёл полноценный рабочий день. Он создал <strong>4 тикета в Kinguin</strong>, загуглил "github copilot refund", попросил Codex зайти на собственный сайт "как пользователь", и в 23:01 ночи пошёл проверять оценки в университет. Это не диагноз. Это пятница. Ой, вторник.
+  </div>
+</div>
+
+<div class="section-break">— &bull; &bull; &bull; —</div>
+
+<!-- ═══════════════════ EXHIBITS ═══════════════════ -->
+<div class="container">
+
+  <!-- EXHIBIT 1 -->
+  <div class="exhibit" id="ex1">
+    <div class="exhibit-tag">Exhibit A &bull; 13:44 — 14:12 AEST</div>
+    <div class="exhibit-title">ТИКЕТ-ЗАВОД ИМЕНИ KINGUIN</div>
+    <div class="exhibit-body">
+      <p>День начался достойно: <em>332 оффера заблокированы</em> из 1117 активных. Это примерно 30% ассортимента. Это примерно треть бизнеса. Это — обычный вторник.</p>
+      <p>Саша методично открыл чат с Kiara ("Merchant Matters Expert" — реальное название бота), и за один сеанс породил <em>тикеты #1865523, #1865531, #1865538, #1865539</em>. Четыре тикета. Один за другим. Как будто Kinguin — это автомат с газировкой, а тикеты — это монетки.</p>
+      <p>Главный нарушитель: <span class="burn">MS Office 2024 Home and Business PC Retail Key</span> — заблокирован несколько раз за ночь (письма в 1:19, 12:04...). Реакция? Ещё один тикет. Логика железная.</p>
+
+      <div class="pull-quote">
+        "Тикет #1865523 — Статус: Open. Тикет #1865531 — Статус: Open. Тикет #1865538 — Статус: Open. Тикет #1865539 — Статус: Open."<br/>
+        — Kinguin Support Portal, 14:09 AEST
+      </div>
+
+      <p>Параллельно — <em>ручная проверка ключей</em> на KichHoat24H.com. Батчи из ноября 2023-го. Декабря 2019-го. Живые: 23 из 29. Мёртвые: 6. Ошибки: <span class="code">0xC004C008</span> (позвони в Microsoft), <span class="code">0xC004C060</span> (ключ мёртв, как динозавр). Просто рутина.</p>
+
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Отношение тикетов к решённым проблемам</span><span>4:0 к вечеру</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:96%;background:linear-gradient(90deg,#ff4500,#ff4500);"></div></div>
+      </div>
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Живые ключи из партии 2019 года</span><span>0 из 57</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:0%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- EXHIBIT 2 -->
+  <div class="exhibit" id="ex2">
+    <div class="exhibit-tag">Exhibit B &bull; 15:36 — 16:37 AEST</div>
+    <div class="exhibit-title">GITHUB COPILOT: РЕФАНД, ПЛАНЫ И КРИЗИС ИДЕНТИЧНОСТИ</div>
+    <div class="exhibit-body">
+      <p>В 15:36 Саша, сидя в Codex (AI-кодинг ассистент), загуглил: <span class="burn">"github copilot refund"</span> — чтобы вернуть деньги за другой AI-кодинг ассистент. Момент дзена.</p>
+      <p>Следующий час посвящён глубокому анализу тарифных планов GitHub Copilot. <em>Free: $0</em>. Pro: $10. Pro+: $39. Max: <em>$100 в месяц</em> — и да, в какой-то момент взгляд остановился на графе "является ли Max за $100 самым дешёвым способом запускать Claude Fable 5". Ответ: возможно. Потраченное время на подсчёты: бесценно.</p>
+      <p>Для справки: Fable 5 стоит <span class="code">$10 input / $50 output per Mtok</span> и "uses your limits ~2x faster than Opus". Кто-то где-то в Reddit использовал <em>10.08 миллиардов токенов</em> за 62 беседы. Саша прочитал об этом в 23:04 и, вероятно, почувствовал что-то похожее на зависть.</p>
+
+      <div class="pull-quote">
+        "Copilot Max ($100/month plan) offers a ~50% effective discount via its credit system, potentially making it the cheapest reliable way to run Fable 5..."<br/>
+        — внутренний монолог в 16:28 AEST
+      </div>
+
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Продуктивность использования AI-инструментов для анализа AI-инструментов</span><span>бесконечная рекурсия</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:88%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- EXHIBIT 3 -->
+  <div class="exhibit" id="ex3">
+    <div class="exhibit-tag">Exhibit C &bull; 00:06 — 16:32 AEST (не опечатка)</div>
+    <div class="exhibit-title">КОТ-КОЛЛЕКЦИЯ: ЭПОПЕЯ БЕЗ ИЗОБРАЖЕНИЙ</div>
+    <div class="exhibit-body">
+      <p>Сессия "Геймификация" в Codex началась в <em>00:06 AEST</em> — то есть в полночь, потому что именно в полночь нормальный человек беспокоится о кошачьих ачивках в корпоративном дашборде.</p>
+      <p>Проблема: <span class="burn">на ни одной ачивке нет изображений</span>. Ни на одной. Ноль. Пустые квадратики. Codex запустил Playwright-скрипт длиной в 50 строк, чтобы зайти на сайт headless-браузером и проверить <span class="code">backgroundImage</span> через <span class="code">getComputedStyle</span>. Прогон: 20 минут 35 секунд. Ещё прогон: 13 минут 58 секунд.</p>
+      <p>В 09:12 доложено: <em>"minimal theme imgCount=19, imgLoaded=true, objectFit=true"</em> — всё починено! В 15:36 Codex добавил <span class="code">outline: "3px solid red"</span> и маркер <span class="code">TEST-ICON-FIX</span> рядом с "Кото-коллекция" для проверки деплоя.</p>
+
+      <div class="pull-quote">
+        "Маркер НЕ появился после hard refresh. Рядом с «Кото-коллекция» нет TEST-ICON-FIX, красных рамок на плитках нет."<br/>
+        — Саша, 15:36 AEST, проверяя собственный сайт
+      </div>
+
+      <p>Итог: Codex проработал суммарно <em>несколько часов</em> ради того, чтобы котики на ачивках отображались корректно. Это не баг — это <span class="burn">приоритет</span>.</p>
+
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Соотношение часов на кошачьи ачивки vs. часов на закрытые KPI-задачи</span><span>примерно 8:1 не в пользу KPI</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:82%;background:linear-gradient(90deg,#ff6a00,#ffb347);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- EXHIBIT 4 -->
+  <div class="exhibit" id="ex4">
+    <div class="exhibit-tag">Exhibit D &bull; 15:47 — 23:36 AEST</div>
+    <div class="exhibit-title">СОБЫТИЯ 2 &bull; ЧЕРНОВИК (8 ЧАСОВ РАБОТЫ НА ВКЛАДКУ-ПРИЗРАК)</div>
+    <div class="exhibit-body">
+      <p>В 15:47 стартовала операция "/ События 2" — рефакторинг раздела дашборда, который помечен как <em>"черновик"</em> и скрыт от сотрудников. Финал сессии зафиксирован в <em>23:36 AEST</em>. Восемь часов. Почти рабочий день. На черновике.</p>
+      <p>По пути Codex попробовали переключить в execution mode через <span class="code">/code</span>, потом <span class="code">/exec</span>, потом <span class="code">/imp</span> — ни одна команда не сработала как ожидалось. Затем просто написали "выполняй цель".</p>
+
+      <div class="pull-quote">
+        "зайди и оцени визуально от лица пользователя этот раздел и скажи что изменить"<br/>
+        — задание для Codex в 16:38 AEST. Codex сделал скрины и дал 6 пунктов критики. Внедрение заняло ещё несколько часов.
+      </div>
+
+      <p>Итоги рефакторинга: Событий вкладок стало меньше (Events 2 скрыта из навигации). <em>Нули больше не выдаются за данные</em>. Антон больше не видит экран из дефисов. Всё это — критически важно для бизнеса с <em>€35,529 на балансе Kinguin</em> и 332 заблокированными офферами.</p>
+
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Время в Codex vs. время на реальные продажи</span><span>8ч vs. "задача открыта"</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:75%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- EXHIBIT 5 -->
+  <div class="exhibit" id="ex5">
+    <div class="exhibit-tag">Exhibit E &bull; 16:27 AEST</div>
+    <div class="exhibit-title">KNAPP MARTON: ТЫ ЗДЕСЬ?</div>
+    <div class="exhibit-body">
+      <p>Среди всего этого хаоса — <em>Teams-чат с Knapp Marton</em>, потенциальным оптовым клиентом. Он спросил про Mac-версию Technical Suite 26. Саша объяснил: только Windows, цена та же — <span class="burn">4 евро</span>.</p>
+      <p>Knapp написал: <em>"You here?"</em> — то есть "ты здесь?". Это риторический вопрос в контексте человека, который одновременно разбирает кошачьи ачивки, тикеты Kinguin и планы GitHub Copilot. Физически — да. Мысленно — не факт.</p>
+      <p>NDA отправлен, email запрошен. Клиент сказал "for sure". Сделка, возможно, состоится. После того как тикеты закроют. И ачивки починят. И События 2 перестанет быть черновиком.</p>
+
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Скорость ответа оптовому клиенту</span><span>небыстро, но NDA ушёл</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:55%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- EXHIBIT 6 -->
+  <div class="exhibit" id="ex6">
+    <div class="exhibit-tag">Exhibit F &bull; 17:29 AEST</div>
+    <div class="exhibit-title">АУДИТ СТЕПАНУСА: "СЛИШКОМ МНОГО ТЕКСТА"</div>
+    <div class="exhibit-body">
+      <p>В 17:29 запущен аудит листингов Степана на GGSEL и Plati. Codex проверил 16 URL, нашёл 1 битую ссылку и целый букет проблем:</p>
+      <p><em>Adobe Acrobat PRO 2022 на Plati:</em> ссылка на Яндекс.Диск — <span class="burn">404</span>. <em>Visual Studio 2026:</em> заведён в категорию "Visio". Во всех смыслах слова неправильно. <em>EndNote:</em> опечатка <span class="code">Lifitime License</span> (не "Lifetime"). <em>Ableton EN:</em> написано "free activation key" для платного ключа — это либо ошибка, либо гениальный маркетинг.</p>
+
+      <div class="pull-quote">
+        "слишком много текста получается"<br/>
+        — реакция на подробный аудит-отчёт в 17:26 AEST.<br/>
+        "нужно в этом аудите делать маркдаун и добавлять все ссылки куда имеет место"<br/>
+        — следующее сообщение, 17:27 AEST.
+      </div>
+
+      <p>Резюме: меньше текста, но больше текста с маркдауном и ссылками. Codex понял. Пошёл читать Google Docs API. <span class="burn">Классика.</span></p>
+
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Typo "Lifitime" в листинге Степана</span><span>1 из 1 найдено</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:100%;background:linear-gradient(90deg,#ff4500,#ff4500);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- EXHIBIT 7 -->
+  <div class="exhibit" id="ex7">
+    <div class="exhibit-tag">Exhibit G &bull; 22:02 — 23:05 AEST</div>
+    <div class="exhibit-title">ПОЛНОЧНЫЙ ДОЗОР: ОЦЕНКИ, REDDIT И ЭКЗИСТЕНЦИЯ</div>
+    <div class="exhibit-body">
+      <p>В 22:02 — снова Ledger. <em>50 открытых задач, 0 просроченных, 16 в работе</em>. Команда работает: Aida — "сильный темп", Andrey — "сильный темп", Anton — "ждём данные". KPI билд: <span class="code">B8417E48BA45</span>. Всё штатно. Всё открыто.</p>
+      <p>В 23:00 — логин в UniMelb. <em>Двухфакторка на akarzanov@student.unimelb.edu.au</em>. Раздел: Exams and results. В 23:01 — страница "My Study". Оценки: COMP90059 — <em>92 (First Class)</em>. ISYS90026 — <em>82 (First Class)</em>. ISYS90051 — <em>80 (First Class)</em>. INFO90002 — <span class="burn">73 (Second Class Hons B)</span>.</p>
+
+      <div class="pull-quote">
+        Базы данных отомстили. В 23:01 ночи в одиночестве перед экраном. Это называется "рефлексия".
+      </div>
+
+      <p>В 23:04 — r/ClaudeAI и r/GithubCopilot. Среди прочего: некий u/shravanrevanna использовал <em>10.08 миллиардов токенов</em> за 62 беседы. Somebody. Had. It. Worse.</p>
+
+      <div class="scale-wrap">
+        <div class="scale-label"><span>WAM-ощущение от INFO90002</span><span>73 из 100</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:73%;background:linear-gradient(90deg,#ff6a00,#ffb347);"></div></div>
+      </div>
+      <div class="scale-wrap">
+        <div class="scale-label"><span>Время проверки оценок (чем позже — тем хуже)</span><span>23:01 = максимальная тревога</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:96%;background:linear-gradient(90deg,#ff4500,#cc0000);"></div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ═══════════════════ VERDICT ═══════════════════ -->
+<div class="verdict">
+  <div class="verdict-label">&#9876; Финальный вердикт &bull; Выпуск 07.07.2026 &#9876;</div>
+  <div class="verdict-title">ПРОДУКТИВНОСТЬ — ПОНЯТИЕ РАСТЯЖИМОЕ</div>
+  <div class="verdict-body">
+    <p>За 7 июля 2026 года Александр Карзанов создал <em>4 тикета в Kinguin</em>, не закрыв ни один. Потратил восемь часов на вкладку, которая помечена как "черновик". Запросил рефанд за Copilot, используя Codex. Попросил Codex войти на сайт "от лица пользователя". Починил кошачьи ачивки. Нашёл у Степана опечатку "Lifitime". В 23:01 проверил оценки и убедился, что базы данных — <em>не сильная сторона</em>.</p>
+    <p>Баланс Kinguin: <em>€35,529</em>. Задач закрыто: <em>6 из 50</em>. Сеанс Codex: <em>с 00:06 до 23:36</em> (почти сутки, если считать с прошлой ночи). Это не провал. Это <em>системный подход</em>. Просто система немного другая.</p>
+    <p>G2A потратила €999 на рекламу. Kinguin заблокировала треть офферов. Степанус написал "Lifitime". <span style="color:var(--fire);font-weight:bold;">И тем не менее — бизнес работает. Как ни странно.</span></p>
+  </div>
+</div>
+
+<footer>
+  The Sasha Report &bull; Автоматически сгенерировано Littlebird на основе реальных данных &bull;
+  ledger.404909.xyz &bull; getitcheap.pro &bull; Никакие тикеты не пострадали при создании этого материала
+</footer>
+
+<script>
+  // Scroll-reveal
+  const reveals = document.querySelectorAll('.exhibit');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+
+  // Scale fills on visible
+  const scales = document.querySelectorAll('.scale-fill');
+  const scaleObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const w = e.target.style.width;
+        e.target.style.width = '0';
+        requestAnimationFrame(() => { e.target.style.width = w; });
+        scaleObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  scales.forEach(el => scaleObs.observe(el));
+</script>
+</body>
+</html>
