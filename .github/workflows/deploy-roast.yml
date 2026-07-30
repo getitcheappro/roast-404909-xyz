@@ -201,11 +201,12 @@ jobs:
           done
 
           mkdir -p _site/roast
-          cp index.html _site/roast/index.html
+          cp roast/index.html _site/roast/index.html
 
           test -f _site/today/index.html
           test -f _site/history/index.html
           test -f _site/reports.json
+          test -f _site/roast/index.html
           test -d _site/reports
           touch _site/.nojekyll
           find _site -maxdepth 4 -type f | sort
