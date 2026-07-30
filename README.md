@@ -1,15 +1,16 @@
-# roast.404909.xyz
+# roast.404909.xyz archive mirror
 
-Public-only GitHub Pages source for the daily roast archive.
+Public archive mirror for the daily roast site.
 
-The repository intentionally contains only the static site, its archived
-reports, and the Pages workflow. The wider `404909.xyz` application repository
-remains private.
+The canonical source for `https://roast.404909.xyz` is now
+`getitcheappro/404909.xyz`. That repository owns the custom domain and receives
+the daily `roast/index.html` updates.
 
 ## Publishing
 
-`.github/workflows/deploy-roast.yml` archives `roast/index.html`, prepares the
-static Pages artifact, and deploys it to `https://roast.404909.xyz`.
+`.github/workflows/deploy-roast.yml` can still archive `roast/index.html` and
+deploy this repository to its default GitHub Pages URL, but it no longer owns
+the `roast.404909.xyz` custom domain.
 
 ## Access from another device
 
@@ -29,16 +30,16 @@ python3 -m http.server 8000
 
 Then open `http://127.0.0.1:8000/`.
 
-No environment variables, API keys, database, package installation, or
-external service credentials are required. GitHub Pages is deployed by GitHub
-Actions from the `main` branch. The custom domain is declared in `CNAME`; DNS
-must keep `roast.404909.xyz` pointed at `getitcheappro.github.io`.
+No environment variables, API keys, database, package installation, or external
+service credentials are required. GitHub Pages is deployed by GitHub Actions
+from the `main` branch. The custom domain is intentionally not declared here;
+`roast.404909.xyz` belongs to `getitcheappro/404909.xyz`.
 
 Troubleshooting:
 
 - A Pages deployment returning HTTP 422 usually means Pages is disabled or the
   repository is private on a plan that does not support private Pages.
-- A certificate-name mismatch means the custom domain is missing from the
-  repository's Pages settings or GitHub is still issuing the certificate.
+- A certificate-name mismatch for `roast.404909.xyz` should be checked in
+  `getitcheappro/404909.xyz`, not this mirror repository.
 - Check Pages state with
   `gh api repos/getitcheappro/roast-404909-xyz/pages`.
