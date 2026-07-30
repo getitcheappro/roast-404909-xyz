@@ -161,7 +161,9 @@ jobs:
           rm -rf _site
           mkdir -p _site
 
-          cp CNAME _site/CNAME
+          if [ -f CNAME ]; then
+            cp CNAME _site/CNAME
+          fi
           cp index.html _site/index.html
           cp robots.txt _site/robots.txt
           cp reports.json _site/reports.json
@@ -202,13 +204,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify roast URL
+      - name: Verify Pages URL
         run: |
-          curl --fail --head --retry 12 --retry-delay 10 --retry-all-errors --max-time 30 http://roast.404909.xyz/today/
-          curl --fail --head --retry 12 --retry-delay 10 --retry-all-errors --max-time 30 http://roast.404909.xyz/history/
-          curl --fail --head --retry 12 --retry-delay 10 --retry-all-errors --max-time 30 http://roast.404909.xyz/reports.json
-          if curl --fail --head --max-time 30 https://roast.404909.xyz/today/; then
-            echo "HTTPS verification passed."
-          else
-            echo "::warning::HTTPS verification did not pass yet. GitHub Pages may still be issuing the custom-domain certificate."
-          fi
+          curl --fail --head --retry 12 --retry-delay 10 --retry-all-errors --max-time 30 "${{ steps.deployment.outputs.page_url }}"
