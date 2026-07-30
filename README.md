@@ -12,6 +12,14 @@ and deploys the static archive at `https://roast.404909.xyz`.
 `getitcheappro/404909.xyz`, archives it into `reports/YYYY-MM-DD/index.html`,
 updates `reports.json`, and deploys the Pages artifact.
 
+Public routes:
+
+- `/` redirects to `/today/`.
+- `/today/` loads the newest dated archive entry from `reports.json`.
+- `/history/` lists dated archive entries.
+- `/reports/YYYY-MM-DD/` serves a permanent archived report.
+- `/roast/` serves the currently fetched source report from the private repo.
+
 ## Access from another device
 
 Repository URL:
@@ -49,6 +57,8 @@ Troubleshooting:
 
 - If `/today/` does not update, check the latest `Deploy Roast` workflow run and
   confirm `ROAST_SOURCE_TOKEN` can read `getitcheappro/404909.xyz`.
+- If `/roast/` shows the wrong page, confirm the workflow's Pages build copies
+  `roast/index.html` to `_site/roast/index.html`, not the root `index.html`.
 - If the workflow archives an old report, confirm the private
   `getitcheappro/404909.xyz:roast/index.html` file was actually updated.
 - A Pages deployment returning HTTP 422 usually means Pages is disabled or the
