@@ -12,6 +12,10 @@ and deploys the static archive at `https://roast.404909.xyz`.
 `getitcheappro/404909.xyz`, archives it into `reports/YYYY-MM-DD/index.html`,
 updates `reports.json`, and deploys the Pages artifact.
 
+The workflow skips creating a new dated archive when the fetched source HTML is
+identical to the latest existing archived report. This prevents the same stale
+source file from being published under multiple calendar dates.
+
 Public routes:
 
 - `/` redirects to `/today/`.
@@ -61,6 +65,8 @@ Troubleshooting:
   `roast/index.html` to `_site/roast/index.html`, not the root `index.html`.
 - If the workflow archives an old report, confirm the private
   `getitcheappro/404909.xyz:roast/index.html` file was actually updated.
+- If repeated dates appear in `reports.json` with the same title and body, the
+  source-staleness guard should be checked before rerunning scheduled deploys.
 - A Pages deployment returning HTTP 422 usually means Pages is disabled or the
   custom domain is already assigned to another repository.
 - A certificate-name mismatch means the custom domain is missing from this
